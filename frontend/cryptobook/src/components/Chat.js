@@ -6,6 +6,7 @@ function Chat(props) {
 
     const [message, setMessage] = useState("");
     const [key, setKey] = useState("");
+    const [messages, setMessages] = useState([]);
 
     useEffect(() => {
         setMessage(message);
@@ -50,10 +51,10 @@ function Chat(props) {
                 Ciao
             </div>
             <div className="col-8">
-                <div className="row" style={{backgroundColor: "blue"}}>
-                    Miao
+                <div className="row">
+                    
                 </div>
-                <div className="row" style={{backgroundColor: "yellow"}}>
+                <div className="row">
                     <form onSubmit={handleSubmit}>
                         <textarea className="form-control mt-1" id="message" rows="5" placeholder="Write a message ..." value={message} onChange={handleMessage}></textarea>
                         <div className="col text-end d-flex mt-1 mb-1">

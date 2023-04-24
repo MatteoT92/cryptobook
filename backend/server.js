@@ -35,6 +35,23 @@ app.post('/login', (req, res) => {
   });
 });
 
+app.post('/sign', (req, res) => {
+  let data = req.body;
+  let email = User.find({email: data.email}, {email: 1, _id: 0}).select('email').exec();
+  email.then(result => {
+    if (result.length === 0) {
+      let user = new User({username: data.username, password: data.password, email: data.email});
+      user.save().then(result => {
+        res.status(200).send({status: 200});
+      }).catch(err => {
+        res.status(400).send({status: 400});
+      });
+    } else {
+      res.status(400).send({status: 400});
+    }
+  })
+});
+
 app.post('/api/msg/encrypt', (req, res) => {
   let msg = req.body;
   let cipherText = AES.encrypt(msg.message, msg.key).toString();
