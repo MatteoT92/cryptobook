@@ -1,0 +1,44 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: grey !important;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  color: green !important;
+  font-size: 20px !important;
+}
+
+.logo {
+  color: white;
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.sign {
+  color: black;
+  font-size: large;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.claim {
+  color: white;
+}
+
+#username, #password {
+  font-size: 20px !important;
+  color: black !important;
+  background-color: transparent !important;
+}
+
+#message {
+  background-color: black;
+  color: green;
+  resize: none;
+}

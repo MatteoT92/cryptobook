@@ -1,0 +1,20 @@
+{
+  "name": "cryptobook",
+  "version": "1.0.0",
+  "description": "Progetto web-app social con Node.js e React",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "Matteo Tartaglione",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.3"
+  }
+}
