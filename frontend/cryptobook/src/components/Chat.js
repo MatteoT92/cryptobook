@@ -5,13 +5,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function Chat(props) {
 
     const [message, setMessage] = useState("");
+    const [key, setKey] = useState("");
 
     useEffect(() => {
         setMessage(message);
-    }, [message]);
+        setKey(key);
+    }, [message, key]);
 
     const handleMessage = (e) => {
         setMessage(e.target.value);
+    }
+
+    const handleKey = (e) => {
+        setKey(e.target.value);
     }
 
     const handleSubmit = (e) => {
@@ -20,17 +26,20 @@ function Chat(props) {
 
     const encryptMessage = (e) => {
         let message = document.getElementById("message").value;
+        let key = document.getElementById("key").value;
         fetch("http://localhost:5000/api/msg/encrypt", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                message: message
+                message: message,
+                key: key
             })
         }).then(res => res.json())
         .then(data => {
             setMessage(data.message);
+            setKey("");
         })
         .catch(err => console.log(err));
     }
@@ -46,9 +55,10 @@ function Chat(props) {
                 </div>
                 <div className="row" style={{backgroundColor: "yellow"}}>
                     <form onSubmit={handleSubmit}>
-                        <textarea className="form-control" id="message" rows="5" placeholder="Write a message ..." value={message} onChange={handleMessage}></textarea>
-                        <div className="col text-end">
-                            <button className="btn btn-warning" type="button" onClick={encryptMessage}>
+                        <textarea className="form-control mt-1" id="message" rows="5" placeholder="Write a message ..." value={message} onChange={handleMessage}></textarea>
+                        <div className="col text-end d-flex mt-1 mb-1">
+                            <input className="form-control" id="key" placeholder="Secret Key" value={key} onChange={handleKey} />
+                            <button className="btn btn-warning ms-1" type="button" onClick={encryptMessage}>
                                 <i className="bi bi-lock"></i>
                             </button>
                             <button className="btn btn-success ms-1" type="submit">
