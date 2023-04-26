@@ -2,7 +2,7 @@ import React from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Whoami() {
+function Claim() {
 
   return (
     <div className="d-inline-flex">
@@ -16,4 +16,4 @@ function Whoami() {
 
 }
 
-export default Whoami;
+export default Claim;

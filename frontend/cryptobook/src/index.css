@@ -42,3 +42,9 @@ code {
   color: green;
   resize: none;
 }
+
+.msg-received {
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+}

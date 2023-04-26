@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Logo from './Logo';
 import Log from './Log';
-import Whoami from './Whoami';
+import Claim from './Claim';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -17,7 +17,7 @@ function Navbar(props) {
         <nav className="navbar bg-dark">
             <div className="container-fluid">
                 <Logo className="navbar-brand" />
-                <Whoami />
+                <Claim />
                 <Log user={user}/>
             </div>
         </nav>
