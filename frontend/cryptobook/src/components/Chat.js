@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Messages from './Messages';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -13,6 +14,10 @@ function Chat(props) {
         setKey(key);
     }, [message, key]);
 
+    useEffect(() => {
+        messagesChat();
+      }, []);
+
     const handleMessage = (e) => {
         setMessage(e.target.value);
     }
@@ -23,6 +28,21 @@ function Chat(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+    }
+
+    const messagesChat = () => {
+        let username = sessionStorage.getItem("user");
+        fetch(`http://localhost:5000/api/messages?username=${username}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+            })
+            .then(res => res.json())
+            .then(data => {
+                setMessages(data.messages);
+            })
+            .catch(err => console.log(err));     
     }
 
     const encryptMessage = (e) => {
@@ -52,7 +72,7 @@ function Chat(props) {
             </div>
             <div className="col-8">
                 <div className="row">
-                    
+                    <Messages data={messages} />
                 </div>
                 <div className="row">
                     <form onSubmit={handleSubmit}>

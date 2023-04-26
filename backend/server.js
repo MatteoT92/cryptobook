@@ -52,6 +52,14 @@ app.post('/sign', (req, res) => {
   })
 });
 
+app.get('/api/messages', (req, res) => {
+  let data = req.query;
+  let messages = User.find({username: data.username}, {messages: 1, _id: 0}).select('messages').exec();
+  messages.then(result => {
+    res.send(result[0]);
+  })
+});
+
 app.post('/api/msg/encrypt', (req, res) => {
   let msg = req.body;
   let cipherText = AES.encrypt(msg.message, msg.key).toString();
