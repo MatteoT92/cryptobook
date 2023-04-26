@@ -7,7 +7,7 @@ const usersSchema = new mongoose.Schema({
   password: String,
   email: String,
   messages: [{
-    receiver: String,
+    sender: String,
     message: String, 
     date: Date
   }]

@@ -40,9 +40,9 @@ function Messages(props) {
     }
 
     return (
-        <div className="m-1 col">
+        <div className="m-1 col box-messages">
             {messages.map((message, i) => (
-                <div className={message.sender === sessionStorage.getItem("user") ? "msg-received float-end mb-1 col-7" : "msg-received float-start mb-1 col-7"} key={i}>
+                <div className={message.sender === sessionStorage.getItem("user") ? "msg-received float-end mt-1 mb-1 col-7" : "msg-received float-start mt-1 mb-1 col-7"} key={i}>
                     <div className="col d-flex m-1">
                         <i className="bi bi-person"></i><h6 className="ms-1 me-1">{message.sender}</h6>
                         <i className="bi bi-clock"></i><h6 className="ms-1">{new Date(message.date).toLocaleString()}</h6>

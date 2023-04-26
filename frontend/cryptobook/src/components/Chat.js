@@ -28,6 +28,24 @@ function Chat(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        let message = document.getElementById("message").value;
+        fetch("http://localhost:5000/api/msg/send", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                sender: sessionStorage.getItem("user"),
+                message: message,
+                date: new Date().toISOString()
+            })
+        }).then(res => res.json())
+        .then(data => {
+            setMessage("");
+            setKey("");
+            messagesChat();
+        })
+        .catch(err => console.log(err));
     }
 
     const messagesChat = () => {
@@ -59,8 +77,8 @@ function Chat(props) {
             })
         }).then(res => res.json())
         .then(data => {
-            setMessage(data.message);
             setKey("");
+            setMessage(data.message);
         })
         .catch(err => console.log(err));
     }

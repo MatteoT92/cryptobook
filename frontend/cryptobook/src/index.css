@@ -48,3 +48,10 @@ code {
   color: white;
   border-radius: 10px;
 }
+
+.box-messages {
+  overflow-y: scroll;
+  height: 300px;
+  min-height: 300px;
+  max-height: 300px;
+}

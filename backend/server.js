@@ -72,5 +72,13 @@ app.post('/api/msg/decrypt', (req, res) => {
   res.send({message: decryptedText});
 });
 
+app.post('/api/msg/send', (req, res) => {
+  let msg = req.body;
+  let msgSended = User.updateOne({username: msg.sender}, {$push: {messages: msg}});
+  msgSended.then(result => {
+    res.send({status: 200});
+  })
+});
+
 // Start server
 app.listen(5000);
