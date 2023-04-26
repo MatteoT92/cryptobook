@@ -80,5 +80,13 @@ app.post('/api/msg/send', (req, res) => {
   })
 });
 
+app.get('/api/friends', (req, res) => {
+  let data = req.query;
+  let friends = User.find({username: data.username}, {friends: 1, _id: 0}).select('friends').exec();
+  friends.then(result => {
+    res.send(result[0]);
+  })
+});
+
 // Start server
 app.listen(5000);

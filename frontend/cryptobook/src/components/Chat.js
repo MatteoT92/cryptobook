@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Messages from './Messages';
+import Friends from './Friends';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -7,6 +8,7 @@ function Chat(props) {
 
     const [message, setMessage] = useState("");
     const [key, setKey] = useState("");
+    const [friends, setFriends] = useState([]);
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
@@ -16,7 +18,8 @@ function Chat(props) {
 
     useEffect(() => {
         messagesChat();
-      }, []);
+        friendsChat();
+    }, []);
 
     const handleMessage = (e) => {
         setMessage(e.target.value);
@@ -36,6 +39,7 @@ function Chat(props) {
             },
             body: JSON.stringify({
                 sender: sessionStorage.getItem("user"),
+                receiver: sessionStorage.getItem("user"),
                 message: message,
                 date: new Date().toISOString()
             })
@@ -63,6 +67,21 @@ function Chat(props) {
             .catch(err => console.log(err));     
     }
 
+    const friendsChat = () => {
+        let username = sessionStorage.getItem("user");
+        fetch(`http://localhost:5000/api/friends?username=${username}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+            })
+            .then(res => res.json())
+            .then(data => {
+                setFriends(data.friends);
+            })
+            .catch(err => console.log(err));     
+    }
+
     const encryptMessage = (e) => {
         let message = document.getElementById("message").value;
         let key = document.getElementById("key").value;
@@ -85,15 +104,15 @@ function Chat(props) {
 
     return (
         <div className="d-flex container-fluid">
-            <div className="col-4" style={{backgroundColor: "red"}}>
-                Ciao
+            <div className="col-4 mt-1 ms-1">
+                <Friends data={friends} />
             </div>
             <div className="col-8">
-                <div className="row">
+                <div className="row ms-1 me-1">
                     <Messages data={messages} />
                 </div>
-                <div className="row">
-                    <form onSubmit={handleSubmit}>
+                <div className="row ms-1 me-1">
+                    <form className="border border-dark border-2 rounded-4" onSubmit={handleSubmit}>
                         <textarea className="form-control mt-1" id="message" rows="5" placeholder="Write a message ..." value={message} onChange={handleMessage}></textarea>
                         <div className="col text-end d-flex mt-1 mb-1">
                             <input className="form-control" id="key" placeholder="Secret Key" value={key} onChange={handleKey} />

@@ -50,8 +50,20 @@ code {
 }
 
 .box-messages {
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 300px;
   min-height: 300px;
   max-height: 300px;
+}
+
+.box-friends {
+  overflow-y: auto;
+  height: 500px;
+  min-height: 500px;
+  max-height: 500px;
+}
+
+.friend {
+  border: 2px solid white;
+  background-color: black;
 }

@@ -8,8 +8,12 @@ const usersSchema = new mongoose.Schema({
   email: String,
   messages: [{
     sender: String,
+    receiver: String,
     message: String, 
     date: Date
+  }],
+  friends: [{
+    username: String
   }]
 });
 
