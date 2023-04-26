@@ -40,17 +40,17 @@ function Messages(props) {
     }
 
     return (
-        <div className="m-1 col-6">
+        <div className="m-1 col">
             {messages.map((message, i) => (
-                <div className="msg-received" key={i}>
+                <div className={message.sender === sessionStorage.getItem("user") ? "msg-received float-end mb-1 col-7" : "msg-received float-start mb-1 col-7"} key={i}>
                     <div className="col d-flex m-1">
                         <i className="bi bi-person"></i><h6 className="ms-1 me-1">{message.sender}</h6>
                         <i className="bi bi-clock"></i><h6 className="ms-1">{new Date(message.date).toLocaleString()}</h6>
                     </div>
-                    <h6 id={`ciphered-msg${i}`}>{message.message}</h6>
+                    <code className="m-1" id={`ciphered-msg${i}`}>{message.message}</code>
                     <div className="col d-flex m-1">
-                        <input className="form-control" id={`fkey${i}`} placeholder="Secret Key" value={key} onChange={handleKey} />
-                        <button className="btn btn-warning ms-1" type="button" onClick={() => decryptMessage(i)}>
+                        <input className="form-control mb-1" id={`fkey${i}`} placeholder="Secret Key" value={key} onChange={handleKey} />
+                        <button className="btn btn-warning ms-1 mb-1" type="button" onClick={() => decryptMessage(i)}>
                             <i className="bi bi-unlock"></i>
                         </button>
                     </div>
