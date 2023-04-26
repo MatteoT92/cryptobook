@@ -19,9 +19,9 @@ function Messages(props) {
         setKey(e.target.value);
     }
 
-    const decryptMessage = (e) => {
-        let message = document.getElementById("ciphered-msg").textContent;
-        let key = document.getElementById("fkey").value;
+    function decryptMessage(idxMsg) {
+        let message = document.getElementById(`ciphered-msg${idxMsg}`).textContent;
+        let key = document.getElementById(`fkey${idxMsg}`).value;
         fetch("http://localhost:5000/api/msg/decrypt", {
             method: "POST",
             headers: {
@@ -33,7 +33,7 @@ function Messages(props) {
             })
         }).then(res => res.json())
         .then(data => {
-            document.getElementById("ciphered-msg").innerHTML = data.message;
+            document.getElementById(`ciphered-msg${idxMsg}`).innerHTML = data.message;
             setKey("");
         })
         .catch(err => console.log(err));
@@ -47,10 +47,10 @@ function Messages(props) {
                         <i className="bi bi-person"></i><h6 className="ms-1 me-1">{message.sender}</h6>
                         <i className="bi bi-clock"></i><h6 className="ms-1">{new Date(message.date).toLocaleString()}</h6>
                     </div>
-                    <h6 id="ciphered-msg">{message.message}</h6>
+                    <h6 id={`ciphered-msg${i}`}>{message.message}</h6>
                     <div className="col d-flex m-1">
-                        <input className="form-control" id="fkey" placeholder="Secret Key" value={key} onChange={handleKey} />
-                        <button className="btn btn-warning ms-1" type="button" onClick={decryptMessage}>
+                        <input className="form-control" id={`fkey${i}`} placeholder="Secret Key" value={key} onChange={handleKey} />
+                        <button className="btn btn-warning ms-1" type="button" onClick={() => decryptMessage(i)}>
                             <i className="bi bi-unlock"></i>
                         </button>
                     </div>
