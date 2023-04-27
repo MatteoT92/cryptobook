@@ -57,7 +57,7 @@ function Messages(props) {
             <div>
                 <div className="d-inline-flex">
                     <User name={sessionStorage.getItem("friend")} />
-                    <i class="bi bi-arrow-left-right h1"></i>
+                    <i className="bi bi-arrow-left-right h1"></i>
                     <User name={sessionStorage.getItem("user")} />
                 </div>
             </div>
