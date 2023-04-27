@@ -12,12 +12,22 @@ function Friends(props) {
     }, [props.data]);
 
     return (
-        <div className="box-friends">
-            {friends.map((friend, i) => (
-                <div className="friend" onClick={() => sessionStorage.setItem("friend", friend.username)}>
-                    <User name={friend.username} key={i} />
-                </div>
-            ))}
+        <div>
+            <div>
+                <form class="d-flex m-1" role="search">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search" />
+                    <button class="btn btn-light" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+            </div>
+            <div className="box-friends">
+                {friends.map((friend, i) => (
+                    <div className="friend" onClick={() => sessionStorage.setItem("friend", friend.username)}>
+                        <User name={friend.username} key={i} />
+                    </div>
+                ))}
+            </div>
         </div>
     )
 

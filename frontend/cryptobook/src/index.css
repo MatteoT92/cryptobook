@@ -45,9 +45,17 @@ code {
 }
 
 #username, #password {
-  font-size: 20px !important;
-  color: black !important;
-  background-color: transparent !important;
+  background-color: transparent;
+  color: black;
+  border: none;
+}
+
+#username::placeholder, #password::placeholder {
+  color: white;
+}
+
+#name::placeholder, #pwd::placeholder, #email::placeholder {
+  color: black;
 }
 
 #message {
@@ -71,9 +79,9 @@ code {
 
 .box-friends {
   overflow-y: auto;
-  height: 500px;
-  min-height: 500px;
-  max-height: 500px;
+  height: 400px;
+  min-height: 400px;
+  max-height: 400px;
 }
 
 .friend {

@@ -34,9 +34,9 @@ function Sign(props) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                username: e.target.username.value,
+                username: e.target.name.value,
                 email: e.target.email.value,
-                password: e.target.password.value
+                password: e.target.pwd.value
             })
         }).then(res => res.json())
         .then(data => {
@@ -74,14 +74,17 @@ function Sign(props) {
             <div className="row justify-content-center align-items-center">
                 <form className="col-6 ml-auto sign" onSubmit={handleSubmit} style={backgroundImage}>
                     <div className="form-group">
+                        <i class="bi bi-person h4 me-1"></i>
                         <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control" id="username" placeholder="Username" value={username} onChange={handleUsername} />
+                        <input type="text" className="form-control" id="name" placeholder="Username" value={username} onChange={handleUsername} />
                     </div>
                     <div className="form-group">
+                        <i class="bi bi-envelope-at h4 me-1"></i>
                         <label htmlFor="email">Email</label>
                         <input type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" value={email} onChange={handleEmail} />
                     </div>
                     <div className="form-group">
+                        <i class="bi bi-key h4 me-1"></i>
                         <label htmlFor="password">Password</label>
                         <div className="d-flex">
                             <input type="password" className="form-control" id="pwd" placeholder="Password" value={password} onChange={handlePassword} />
