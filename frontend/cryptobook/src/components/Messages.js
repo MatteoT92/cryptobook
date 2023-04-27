@@ -40,7 +40,7 @@ function Messages(props) {
     }
 
     return (
-        <div className="m-1 col box-messages border border-dark border-2 rounded-4">
+        <div className="m-1 col box-messages">
             {messages.map((message, i) => (
                 <div className={message.sender === sessionStorage.getItem("user") ? "msg-received float-end mt-1 mb-1 col-7" : "msg-received float-start mt-1 mb-1 col-7"} key={i}>
                     <div className="col d-flex m-1">

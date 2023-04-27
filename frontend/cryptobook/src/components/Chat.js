@@ -104,15 +104,15 @@ function Chat(props) {
 
     return (
         <div className="d-flex container-fluid">
-            <div className="col-4 mt-1 ms-1">
+            <div className="col-4 mt-1 ms-1 border border-dark border-2 rounded-4">
                 <Friends data={friends} />
             </div>
-            <div className="col-8">
+            <div className="col-8 mt-1 ms-1 border border-dark border-2 rounded-4">
                 <div className="row ms-1 me-1">
                     <Messages data={messages} />
                 </div>
                 <div className="row ms-1 me-1">
-                    <form className="border border-dark border-2 rounded-4" onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit}>
                         <textarea className="form-control mt-1" id="message" rows="5" placeholder="Write a message ..." value={message} onChange={handleMessage}></textarea>
                         <div className="col text-end d-flex mt-1 mb-1">
                             <input className="form-control" id="key" placeholder="Secret Key" value={key} onChange={handleKey} />

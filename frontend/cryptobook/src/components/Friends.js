@@ -12,7 +12,7 @@ function Friends(props) {
     }, [props.data]);
 
     return (
-        <div className="box-friends border border-dark border-2 rounded-4">
+        <div className="box-friends">
             {friends.map((friend, i) => (
                 <div className="friend">
                     <User name={friend.username} key={i} />
