@@ -78,7 +78,11 @@ app.post('/api/msg/encrypt', (req, res) => {
 app.post('/api/msg/decrypt', (req, res) => {
   let msg = req.body;
   let decryptedText = AES.decrypt(msg.message, msg.key).toString(enc.Utf8);
-  res.send({message: decryptedText});
+  if (decryptedText.length > 0) {
+    res.send({message: decryptedText});
+  } else {
+    res.send({message: msg.message});
+  }
 });
 
 app.post('/api/msg/send', (req, res) => {
