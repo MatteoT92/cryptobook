@@ -14,7 +14,7 @@ function Friends(props) {
     return (
         <div className="box-friends">
             {friends.map((friend, i) => (
-                <div className="friend">
+                <div className="friend" onClick={() => sessionStorage.setItem("friend", friend.username)}>
                     <User name={friend.username} key={i} />
                 </div>
             ))}

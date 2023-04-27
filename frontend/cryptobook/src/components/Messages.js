@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import User from './User';
 
 function Messages(props) {
 
@@ -41,6 +42,13 @@ function Messages(props) {
 
     return (
         <div className="m-1 col box-messages">
+            <div>
+                <div className="d-inline-flex">
+                    <User name={sessionStorage.getItem("friend")} />
+                    <p className="h1"> &gt; </p>
+                    <User name={sessionStorage.getItem("user")} />
+                </div>
+            </div>
             {messages.map((message, i) => (
                 <div className={message.sender === sessionStorage.getItem("user") ? "msg-received float-end mt-1 mb-1 col-7" : "msg-received float-start mt-1 mb-1 col-7"} key={i}>
                     <div className="col d-flex m-1">

@@ -10,11 +10,19 @@ function Chat(props) {
     const [key, setKey] = useState("");
     const [friends, setFriends] = useState([]);
     const [messages, setMessages] = useState([]);
+    const [friend, setFriend] = useState(sessionStorage.getItem("friend"));
 
     useEffect(() => {
         setMessage(message);
         setKey(key);
     }, [message, key]);
+
+    useEffect(() => {
+        const refresh = setInterval(() => {
+          setFriend(sessionStorage.getItem("friend"));
+        }, 1000);
+        return () => clearInterval(refresh);
+      }, []);
 
     useEffect(() => {
         messagesChat();
