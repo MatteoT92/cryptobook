@@ -119,7 +119,7 @@ function Chat(props) {
                 </div>
                 <div className="row ms-1 me-1">
                     <form onSubmit={handleSubmit}>
-                        <textarea className="form-control mt-1" id="message" rows="5" placeholder="Write a message ..." value={message} onChange={handleMessage}></textarea>
+                        <textarea className="form-control mt-1" id="message" rows="3" placeholder="Write a message ..." value={message} onChange={handleMessage}></textarea>
                         <div className="col text-end d-flex mt-1 mb-1">
                             <input className="form-control" id="key" placeholder="Secret Key" value={key} onChange={handleKey} />
                             <button className="btn btn-warning ms-1" type="button" onClick={encryptMessage}>
