@@ -20,6 +20,19 @@ code {
   font-weight: bold;
 }
 
+.login {
+  color: green;
+  background-color: transparent;
+  border: none;
+}
+
+.logout {
+  color: red;
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+}
+
 .sign {
   color: black;
   font-size: large;

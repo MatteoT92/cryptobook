@@ -47,21 +47,19 @@ function Log(props) {
       setUsername(null);
       setPassword(null);
       sessionStorage.removeItem("user");
+      sessionStorage.removeItem("friend");
     }
 
-    const loginStyle = {
-      fontSize: "40px",
-      color: "green",
-      backgroundColor: "transparent",
-      border: "none"
-    }
-
-    const logoutStyle = {
-      fontSize: "40px",
-      color: "red",
-      backgroundColor: "transparent",
-      border: "none",
-      padding: "10px"
+    const toggleVisibility = (e) => {
+      let password = document.getElementById("password");
+      let iconVisibility = document.getElementsByClassName("bi bi-eye");
+      if (password.type === "password") {
+          password.type = "text";
+          iconVisibility.className = "bi bi-eye-slash";
+      } else {
+          password.type = "password";
+          iconVisibility.className = "bi bi-eye";
+      }
     }
 
     if (user) {
@@ -70,7 +68,7 @@ function Log(props) {
           <div className="d-flex">
             <User name={username} />
             <button className="btn" onClick={logout}>
-              <i className="bi bi-x-circle-fill" style={logoutStyle}></i>
+              <i className="bi bi-x-circle-fill h1 logout"></i>
             </button>
           </div>
         </div>
@@ -81,8 +79,11 @@ function Log(props) {
           <form className="d-flex" onSubmit={handleSubmit}>
             <input type="text" className="form-control me-2" id="username" placeholder="Username" value={username} onChange={handleChangeInputUsername} />
             <input type="password" className="form-control me-2" id="password" placeholder="Password" value={password} onChange={handleChangeInputPassword} />
+            <button className="btn btn-dark ms-1" type="button" onClick={toggleVisibility}>
+              <i className="bi bi-eye"></i>
+            </button>
             <button className="btn" type="submit">
-              <i className="bi bi-box-arrow-in-right" style={loginStyle}></i>
+              <i className="bi bi-box-arrow-in-right h1 login"></i>
             </button>
           </form>
         </div>

@@ -108,6 +108,18 @@ function Chat(props) {
         .catch(err => console.log(err));
     }
 
+    const toggleVisibility = (e) => {
+        let key = document.getElementById("key");
+        let iconVisibility = document.getElementsByClassName("bi bi-eye");
+        if (key.type === "password") {
+            key.type = "text";
+            iconVisibility.className = "bi bi-eye-slash";
+        } else {
+            key.type = "password";
+            iconVisibility.className = "bi bi-eye";
+        }
+    }
+
     return (
         <div className="d-flex container-fluid">
             <div className="col-4 mt-1 ms-1 border border-dark border-2 rounded-4">
@@ -121,7 +133,10 @@ function Chat(props) {
                     <form onSubmit={handleSubmit}>
                         <textarea className="form-control mt-1" id="message" rows="3" placeholder="Write a message ..." value={message} onChange={handleMessage}></textarea>
                         <div className="col text-end d-flex mt-1 mb-1">
-                            <input className="form-control" id="key" placeholder="Secret Key" value={key} onChange={handleKey} />
+                            <input className="form-control" type="password" id="key" placeholder="Secret Key" value={key} onChange={handleKey} />
+                            <button className="btn btn-dark ms-1" type="button" onClick={toggleVisibility}>
+                                <i className="bi bi-eye"></i>
+                            </button>
                             <button className="btn btn-warning ms-1" type="button" onClick={encryptMessage}>
                                 <i className="bi bi-lock"></i>
                             </button>

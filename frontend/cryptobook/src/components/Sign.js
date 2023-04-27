@@ -51,6 +51,18 @@ function Sign(props) {
         })
     }
 
+    const toggleVisibility = (e) => {
+        let password = document.getElementById("pwd");
+        let iconVisibility = document.getElementsByClassName("bi bi-eye");
+        if (password.type === "password") {
+            password.type = "text";
+            iconVisibility.className = "bi bi-eye-slash";
+        } else {
+            password.type = "password";
+            iconVisibility.className = "bi bi-eye";
+        }
+    }
+
     const backgroundImage = {
         backgroundImage: "url(" + process.env.PUBLIC_URL + "10.webp)",
         backgroundSize: "cover",
@@ -71,13 +83,14 @@ function Sign(props) {
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" id="password" placeholder="Password" value={password} onChange={handlePassword} />
+                        <div className="d-flex">
+                            <input type="password" className="form-control" id="pwd" placeholder="Password" value={password} onChange={handlePassword} />
+                            <button className="btn btn-light" type="button" onClick={toggleVisibility}>
+                                <i className="bi bi-eye"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div className="form-group form-check">
-                        <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-                        <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
-                    </div>
-                    <div className="col text-center">
+                    <div className="col text-center mt-2">
                         <button type="submit" className="btn btn-primary">Sign me!</button>
                     </div>
                     <div className="row text-center">

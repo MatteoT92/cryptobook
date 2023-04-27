@@ -40,6 +40,18 @@ function Messages(props) {
         .catch(err => console.log(err));
     }
 
+    function toggleVisibility(idxMsg) {
+        let key = document.getElementById(`fkey${idxMsg}`);
+        let iconVisibility = document.getElementsByClassName("bi bi-eye");
+        if (key.type === "password") {
+            key.type = "text";
+            iconVisibility.className = "bi bi-eye-slash";
+        } else {
+            key.type = "password";
+            iconVisibility.className = "bi bi-eye";
+        }
+    }
+
     return (
         <div>
             <div>
@@ -58,7 +70,10 @@ function Messages(props) {
                         </div>
                         <code className="m-1" id={`ciphered-msg${i}`}>{message.message}</code>
                         <div className="col d-flex m-1">
-                            <input className="form-control mb-1" id={`fkey${i}`} placeholder="Secret Key" value={key} onChange={handleKey} />
+                            <input className="form-control mb-1" type="password" id={`fkey${i}`} placeholder="Secret Key" value={key} onChange={handleKey} />
+                            <button className="btn btn-dark ms-1 mb-1" type="button" onClick={() => toggleVisibility(i)}>
+                                <i className="bi bi-eye"></i>
+                            </button>
                             <button className="btn btn-warning ms-1 mb-1" type="button" onClick={() => decryptMessage(i)}>
                                 <i className="bi bi-unlock"></i>
                             </button>
