@@ -64,7 +64,8 @@ app.get('/api/messages', (req, res) => {
   let data = req.query;
   let messages = User.find({username: data.user}, {messages: 1, _id: 0}).select('messages').exec();
   messages.then(result => {
-    res.send(result[0]);
+    let messagesFiltered = result[0].messages.filter(msg => msg.receiver === data.friend);
+    res.send({messages: messagesFiltered});
   })
 });
 

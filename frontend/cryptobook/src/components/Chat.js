@@ -20,14 +20,11 @@ function Chat(props) {
     useEffect(() => {
         const refresh = setInterval(() => {
           setFriend(sessionStorage.getItem("friend"));
+          messagesChat();
+          friendsChat();
         }, 1000);
         return () => clearInterval(refresh);
       }, []);
-
-    useEffect(() => {
-        messagesChat();
-        friendsChat();
-    }, []);
 
     const handleMessage = (e) => {
         setMessage(e.target.value);
@@ -47,7 +44,7 @@ function Chat(props) {
             },
             body: JSON.stringify({
                 sender: sessionStorage.getItem("user"),
-                receiver: sessionStorage.getItem("user"),
+                receiver: sessionStorage.getItem("friend"),
                 message: message,
                 date: new Date().toISOString()
             })
@@ -62,7 +59,8 @@ function Chat(props) {
 
     const messagesChat = () => {
         let user = sessionStorage.getItem("user");
-        fetch(`http://localhost:5000/api/messages?user=${user}`, {
+        let friend = sessionStorage.getItem("friend");
+        fetch(`http://localhost:5000/api/messages?user=${user}&friend=${friend}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
