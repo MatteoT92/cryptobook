@@ -62,7 +62,7 @@ app.post('/sign', (req, res) => {
 
 app.get('/api/messages', (req, res) => {
   let data = req.query;
-  let messages = User.find({username: data.username}, {messages: 1, _id: 0}).select('messages').exec();
+  let messages = User.find({username: data.user}, {messages: 1, _id: 0}).select('messages').exec();
   messages.then(result => {
     res.send(result[0]);
   })
@@ -90,7 +90,7 @@ app.post('/api/msg/send', (req, res) => {
 
 app.get('/api/friends', (req, res) => {
   let data = req.query;
-  let friends = User.find({username: data.username}, {friends: 1, _id: 0}).select('friends').exec();
+  let friends = User.find({username: data.user}, {friends: 1, _id: 0}).select('friends').exec();
   friends.then(result => {
     res.send(result[0]);
   })

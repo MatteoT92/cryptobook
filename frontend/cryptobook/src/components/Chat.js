@@ -61,8 +61,8 @@ function Chat(props) {
     }
 
     const messagesChat = () => {
-        let username = sessionStorage.getItem("user");
-        fetch(`http://localhost:5000/api/messages?username=${username}`, {
+        let user = sessionStorage.getItem("user");
+        fetch(`http://localhost:5000/api/messages?user=${user}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -76,8 +76,8 @@ function Chat(props) {
     }
 
     const friendsChat = () => {
-        let username = sessionStorage.getItem("user");
-        fetch(`http://localhost:5000/api/friends?username=${username}`, {
+        let user = sessionStorage.getItem("user");
+        fetch(`http://localhost:5000/api/friends?user=${user}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
