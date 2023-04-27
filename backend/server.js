@@ -16,6 +16,9 @@ const corsOptions = {
 // Crypto Library
 const {AES, enc} = require('crypto-js');
 
+// Bcrypt Library
+const bcrypt = require('bcrypt');
+
 // Middleware
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -23,14 +26,19 @@ app.use(express.json());
 // API Routes
 app.post('/login', (req, res) => {
   let data = req.body;
-  let user = User.find({username: data.username, password: data.password}, {username: 1, _id: 0}).select('username').exec();
-  user.then(result => {
-    if (result.length === 1) {
-      res.status(200).send(result[0]);
-    } else {
-      res.status(400).send({
-        message: 'Invalid username or password'
+  let passwordEncrypted = User.find({username: data.username}, {password: 1, _id: 0}).select('password').exec();
+  passwordEncrypted.then(result => {
+    if (bcrypt.compareSync(data.password, result[0].password)) {
+      let user = User.find({username: data.username, password: result[0].password}, {username: 1, _id: 0}).select('username').exec();
+      user.then(result => {
+        if (result.length === 1) {
+          res.status(200).send(result[0]);
+        } else {
+          res.status(400).send({message: 'Invalid username or password'});
+        }
       });
+    } else {
+      res.status(400).send({status: 400});
     }
   });
 });
@@ -40,7 +48,7 @@ app.post('/sign', (req, res) => {
   let email = User.find({email: data.email}, {email: 1, _id: 0}).select('email').exec();
   email.then(result => {
     if (result.length === 0) {
-      let user = new User({username: data.username, password: data.password, email: data.email});
+      let user = new User({username: data.username, password: bcrypt.hashSync(data.password, 10), email: data.email});
       user.save().then(result => {
         res.status(200).send({status: 200});
       }).catch(err => {
