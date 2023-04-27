@@ -9,7 +9,7 @@ function Friends(props) {
     const [search, setSearch] = useState("");
 
     useEffect(() => {
-        if (document.getElementById("search").value === "") {
+        if (document.getElementById("search").value.length === 0) {
             setFriends(props.data);
         } else {
             setFriends(friends);
