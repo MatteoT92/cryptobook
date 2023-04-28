@@ -74,18 +74,18 @@ function Sign(props) {
             <div className="row justify-content-center align-items-center">
                 <form className="col-6 ml-auto sign" onSubmit={handleSubmit} style={backgroundImage}>
                     <div className="form-group">
-                        <i class="bi bi-person h4 me-1"></i>
-                        <label htmlFor="username">Username</label>
+                        <i className="bi bi-person-fill h4 me-1 text-white"></i>
+                        <label htmlFor="username" className="text-white">Username</label>
                         <input type="text" className="form-control" id="name" placeholder="Username" value={username} onChange={handleUsername} />
                     </div>
                     <div className="form-group">
-                        <i class="bi bi-envelope-at h4 me-1"></i>
-                        <label htmlFor="email">Email</label>
+                        <i className="bi bi-envelope-at-fill h4 me-1 text-white"></i>
+                        <label htmlFor="email" className="text-white">Email</label>
                         <input type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" value={email} onChange={handleEmail} />
                     </div>
                     <div className="form-group">
-                        <i class="bi bi-key h4 me-1"></i>
-                        <label htmlFor="password">Password</label>
+                        <i className="bi bi-key-fill h4 me-1 text-white"></i>
+                        <label htmlFor="password" className="text-white">Password</label>
                         <div className="d-flex">
                             <input type="password" className="form-control" id="pwd" placeholder="Password" value={password} onChange={handlePassword} />
                             <button className="btn btn-light" type="button" onClick={toggleVisibility}>

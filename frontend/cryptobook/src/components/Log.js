@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import User from './User';
+import Setting from './Setting';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -67,9 +68,7 @@ function Log(props) {
         <div>
           <div className="d-flex">
             <User name={username} />
-            <button className="btn">
-              <i className="bi bi-gear h1 setting"></i>
-            </button>  
+            <Setting />
             <button className="btn" onClick={logout}>
               <i className="bi bi-x-circle-fill h1 logout"></i>
             </button>
