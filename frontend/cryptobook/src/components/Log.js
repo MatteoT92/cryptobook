@@ -67,6 +67,9 @@ function Log(props) {
         <div>
           <div className="d-flex">
             <User name={username} />
+            <button className="btn">
+              <i className="bi bi-gear h1 setting"></i>
+            </button>  
             <button className="btn" onClick={logout}>
               <i className="bi bi-x-circle-fill h1 logout"></i>
             </button>

@@ -40,13 +40,20 @@ code {
   border-radius: 10px;
 }
 
+.setting {
+  color: white;
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+}
+
 .claim {
   color: white;
 }
 
 #username, #password {
   background-color: transparent;
-  color: black;
+  color: white;
   border: none;
 }
 
