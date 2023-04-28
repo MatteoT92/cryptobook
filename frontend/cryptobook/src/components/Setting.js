@@ -10,28 +10,23 @@ function Setting(props) {
 
     return (
         <Navbar variant="dark" bg="dark" expand="lg">
-        <Container fluid>
-            <Navbar.Toggle aria-controls="navbar-dark" />
-            <Navbar.Collapse id="navbar-dark">
-            <Nav>
-                <NavDropdown
-                id="nav-dropdown-dark"
-                title={<i className="bi bi-gear-fill h1 setting"></i>}
-                menuVariant="dark"
-                align="end"
-                >
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                    Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.4">
-                    Separated link
-                </NavDropdown.Item>
-                </NavDropdown>
-            </Nav>
-            </Navbar.Collapse>
-        </Container>
+            <Container fluid>
+                <Navbar.Toggle aria-controls="navbar-dark" />
+                <Navbar.Collapse id="navbar-dark">
+                    <Nav>
+                        <NavDropdown
+                        id="nav-dropdown-dark"
+                        title={<i className="bi bi-gear-fill h1 setting"></i>}
+                        menuVariant="dark"
+                        align="end"
+                        >
+                            <NavDropdown.Item href="#">Change Password</NavDropdown.Item>
+                            <NavDropdown.Item href="#">Change Photo</NavDropdown.Item>
+                            <NavDropdown.Item href="#">Unsubscribe</NavDropdown.Item>
+                        </NavDropdown>
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
         </Navbar>
     )
 
