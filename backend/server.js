@@ -101,5 +101,9 @@ app.get('/api/friends', (req, res) => {
   })
 });
 
+app.post('/api/settings/password', (req, res) => {
+  
+});
+
 // Start server
 app.listen(5000);

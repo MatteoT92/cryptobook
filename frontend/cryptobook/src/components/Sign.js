@@ -81,7 +81,7 @@ function Sign(props) {
                     <div className="form-group">
                         <i className="bi bi-envelope-at-fill h4 me-1 text-white"></i>
                         <label htmlFor="email" className="text-white">Email</label>
-                        <input type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" value={email} onChange={handleEmail} />
+                        <input type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Email" value={email} onChange={handleEmail} />
                     </div>
                     <div className="form-group">
                         <i className="bi bi-key-fill h4 me-1 text-white"></i>
