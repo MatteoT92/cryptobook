@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import Alert from 'react-bootstrap/Alert';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -33,6 +36,27 @@ function ChangePassword(props) {
 
   const handleSubmit = (e) => {
       e.preventDefault();
+      fetch('http://localhost:5000/api/settings/password', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              username: sessionStorage.getItem('user'),
+              oldPassword: oldPassword,
+              newPassword: newPassword
+          })
+      }).then(res => res.json())
+      .then(data => {
+          setOldPassword("");
+          setNewPassword("");
+          if (data.status === 200) {
+              alert("Password changed successfully");
+              handleClose();
+          } else {
+              alert("Something went wrong");
+          }
+      });
   }
 
   const toggleVisibilityOldPassword = (e) => {
@@ -61,38 +85,43 @@ function ChangePassword(props) {
 
   return (
         <div>
-            <button className="btn text-white" type="button" onClick={handleShow}>
+            <Button variant="dark" onClick={handleShow}>
                 <i className="bi bi-key-fill me-1"></i>{btnText}
-            </button>
+            </Button>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Change Password</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div>
-                        <form onSubmit={handleSubmit}>
-                            <label htmlFor="old-password">Previous Password</label>
+                    <Form>
+                        <Form.Group className="mb-3" controlId="old-password">
+                            <Form.Label>Previous Password</Form.Label>
                             <div className="d-flex">
-                                <input type="password" className="form-control" id="old-password" placeholder="Previous Password" value={oldPassword} onChange={handleOldPassword} />
-                                <button className="btn btn-light" type="button" onClick={toggleVisibilityOldPassword}>
+                                <Form.Control type="password" placeholder="Previous Password" value={oldPassword} onChange={handleOldPassword} />
+                                <Button variant="light" onClick={toggleVisibilityOldPassword}>
                                     <i className="bi bi-eye"></i>
-                                </button>
+                                </Button>
                             </div>
-                            <label htmlFor="new-password">New Password</label>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="new-password">
+                            <Form.Label>New Password</Form.Label>
                             <div className="d-flex">
-                                <input type="password" className="form-control" id="new-password" placeholder="New Password" value={newPassword} onChange={handleNewPassword} />
-                                <button className="btn btn-light" type="button" onClick={toggleVisibilityNewPassword}>
+                                <Form.Control type="password" placeholder="New Password" value={newPassword} onChange={handleNewPassword}/>
+                                <Button variant="light" onClick={toggleVisibilityNewPassword}>
                                     <i className="bi bi-eye"></i>
-                                </button>
+                                </Button>
                             </div>
-                            <div className="col text-center mt-2">
-                                <button type="submit" className="btn btn-primary">
-                                    <i className="bi bi-save-fill me-1"></i>Save
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                        </Form.Group>
+                    </Form>
                 </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleSubmit}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
             </Modal>
         </div>
   )

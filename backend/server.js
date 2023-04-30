@@ -102,7 +102,25 @@ app.get('/api/friends', (req, res) => {
 });
 
 app.post('/api/settings/password', (req, res) => {
-  
+  let data = req.body;
+  let passwordEncrypted = User.find({username: data.username}, {password: 1, _id: 0}).select('password').exec();
+  passwordEncrypted.then(result => {
+    if (bcrypt.compareSync(data.oldPassword, result[0].password)) {
+      let user = User.find({username: data.username, password: result[0].password}, {username: 1, _id: 0}).select('username').exec();
+      user.then(result => {
+        if (result.length === 1) {
+          let newPassword = User.updateOne({username: data.username}, {password: bcrypt.hashSync(data.newPassword, 10)});
+          newPassword.then(result => {
+            res.status(200).send({status: 200});
+          });
+        } else {
+          res.status(400).send({status: 400});
+        }
+      });
+    } else {
+      res.status(400).send({status: 400});
+    }
+  });
 });
 
 // Start server
