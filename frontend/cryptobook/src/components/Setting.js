@@ -4,6 +4,8 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import ChangePassword from "./ChangePassword";
+import ChangePhoto from "./ChangePhoto";
+import Unsubscribe from "./Unsubscribe";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -23,13 +25,13 @@ function Setting(props) {
                         align="end"
                         >
                             <NavDropdown.Item href="#">
-                                <ChangePassword btnText="Change Password" />
+                                <ChangePassword />
                             </NavDropdown.Item>
                             <NavDropdown.Item href="#">
-                                <i className="bi bi-person-fill me-1 text-white"></i>Change Photo
+                                <ChangePhoto />
                             </NavDropdown.Item>
                             <NavDropdown.Item href="#">
-                                <i className="bi bi-trash3-fill me-1 text-white"></i>Unsubscribe
+                                <Unsubscribe />
                             </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>

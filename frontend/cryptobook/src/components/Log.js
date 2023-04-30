@@ -47,8 +47,7 @@ function Log(props) {
       setUser(null);
       setUsername(null);
       setPassword(null);
-      sessionStorage.removeItem("user");
-      sessionStorage.removeItem("friend");
+      sessionStorage.clear();
     }
 
     const toggleVisibility = (e) => {

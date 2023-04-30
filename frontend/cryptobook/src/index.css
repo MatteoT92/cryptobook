@@ -88,4 +88,5 @@ code {
 .friend {
   border: 2px solid white;
   background-color: black;
+  cursor: pointer;
 }

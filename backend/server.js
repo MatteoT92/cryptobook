@@ -123,5 +123,13 @@ app.post('/api/settings/password', (req, res) => {
   });
 });
 
+app.post('/api/settings/unsubscribe', (req, res) => {
+  let data = req.body;
+  let user = User.findOneAndDelete({username: data.username});
+  user.then(result => {
+    res.status(200).send({status: 200});
+  });
+});
+
 // Start server
 app.listen(5000);

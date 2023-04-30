@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import Alert from 'react-bootstrap/Alert';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -10,7 +9,6 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 function ChangePassword(props) {
 
   const [show, setShow] = useState(false);
-  const [btnText, setBtnText] = useState(props.btnText);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
@@ -86,7 +84,7 @@ function ChangePassword(props) {
   return (
         <div>
             <Button variant="dark" onClick={handleShow}>
-                <i className="bi bi-key-fill me-1"></i>{btnText}
+                <i className="bi bi-key-fill me-1"></i>Change Password
             </Button>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
