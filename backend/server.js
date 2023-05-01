@@ -123,6 +123,15 @@ app.post('/api/settings/password', (req, res) => {
   });
 });
 
+app.post('/api/settings/photo', (req, res) => {
+  let data = req.body;
+  let image = Buffer.from(data.photo.split(',')[1], 'base64');
+  let user = User.findOneAndUpdate({username: data.username}, {photo: image});
+  user.then(result => {
+    res.status(200).send({status: 200});
+  });
+});
+
 app.post('/api/settings/unsubscribe', (req, res) => {
   let data = req.body;
   let user = User.findOneAndDelete({username: data.username});

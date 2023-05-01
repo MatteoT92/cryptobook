@@ -6,6 +6,7 @@ const usersSchema = new mongoose.Schema({
   username: String,
   password: String,
   email: String,
+  photo: Buffer,
   messages: [{
     sender: String,
     receiver: String,

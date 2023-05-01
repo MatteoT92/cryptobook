@@ -20,9 +20,13 @@ function ChangePassword(props) {
       setNewPassword(newPassword);
   }, [newPassword]);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+  }
 
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setShow(true);
+  }
 
   const handleOldPassword = (e) => {
       setOldPassword(e.target.value);
