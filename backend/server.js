@@ -48,8 +48,10 @@ app.post('/sign', (req, res) => {
   let email = User.find({email: data.email}, {email: 1, _id: 0}).select('email').exec();
   email.then(result => {
     if (result.length === 0) {
-      let image = Buffer.from(data.photo.split(',')[1], 'base64');
-      let user = new User({username: data.username, password: bcrypt.hashSync(data.password, 10), email: data.email, photo: image});
+      let imgBase64String = data.photo.split('/');
+      let type = imgBase64String[1].split(';')[0];
+      let image = Buffer.from(imgBase64String[1].split(',')[1], 'base64');
+      let user = new User({username: data.username, password: bcrypt.hashSync(data.password, 10), email: data.email, photo: image, typePhoto: type});
       user.save().then(result => {
         res.status(200).send({status: 200});
       }).catch(err => {
@@ -63,14 +65,14 @@ app.post('/sign', (req, res) => {
 
 app.get('/api/photo', (req, res) => {
   let data = req.query;
-  User.findOne({ username: data.username }, { photo: 1, _id: 0 })
+  User.findOne({ username: data.username }, { photo: 1, typePhoto:1, _id: 0 })
     .then(user => {
       if (!user) {
         return res.status(404).send('Utente non trovato');
       }
       const imageBinData = user.photo;
       const imageBase64 = imageBinData.toString('base64');
-      res.send({photo: imageBase64});
+      res.send({photo: imageBase64, typePhoto: user.typePhoto});
     })
     .catch(err => {
       res.status(500).send('Errore del server');
@@ -83,7 +85,7 @@ app.get('/api/messages', (req, res) => {
   messages.then(result => {
     let messagesFiltered = result[0].messages.filter(msg => msg.receiver === data.friend);
     res.send({messages: messagesFiltered});
-  })
+  });
 });
 
 app.post('/api/msg/encrypt', (req, res) => {
@@ -107,7 +109,7 @@ app.post('/api/msg/send', (req, res) => {
   let msgSended = User.updateOne({username: msg.sender}, {$push: {messages: msg}});
   msgSended.then(result => {
     res.send({status: 200});
-  })
+  });
 });
 
 app.get('/api/friends', (req, res) => {
@@ -115,7 +117,7 @@ app.get('/api/friends', (req, res) => {
   let friends = User.find({username: data.user}, {friends: 1, _id: 0}).select('friends').exec();
   friends.then(result => {
     res.send(result[0]);
-  })
+  });
 });
 
 app.post('/api/settings/password', (req, res) => {
@@ -142,8 +144,10 @@ app.post('/api/settings/password', (req, res) => {
 
 app.post('/api/settings/photo', (req, res) => {
   let data = req.body;
-  let image = Buffer.from(data.photo.split(',')[1], 'base64');
-  let user = User.findOneAndUpdate({username: data.username}, {photo: image});
+  let imgBase64String = data.photo.split('/');
+  let type = imgBase64String[1].split(';')[0];
+  let image = Buffer.from(imgBase64String[1].split(',')[1], 'base64');
+  let user = User.findOneAndUpdate({username: data.username}, {photo: image, typePhoto: type});
   user.then(result => {
     res.status(200).send({status: 200});
   });

@@ -25,7 +25,7 @@ function User(props) {
             }
         }).then(res => res.json())
         .then(data => {
-            setPhoto("data:image/jpeg;base64," + data.photo);
+            setPhoto(`data:image/${data.typePhoto};base64,${data.photo}`);
         });
     }
 

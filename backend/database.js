@@ -7,6 +7,7 @@ const usersSchema = new mongoose.Schema({
   password: String,
   email: String,
   photo: Buffer,
+  typePhoto: String,
   messages: [{
     sender: String,
     receiver: String,
