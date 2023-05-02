@@ -48,7 +48,8 @@ app.post('/sign', (req, res) => {
   let email = User.find({email: data.email}, {email: 1, _id: 0}).select('email').exec();
   email.then(result => {
     if (result.length === 0) {
-      let user = new User({username: data.username, password: bcrypt.hashSync(data.password, 10), email: data.email});
+      let image = Buffer.from(data.photo.split(',')[1], 'base64');
+      let user = new User({username: data.username, password: bcrypt.hashSync(data.password, 10), email: data.email, photo: image});
       user.save().then(result => {
         res.status(200).send({status: 200});
       }).catch(err => {
@@ -57,7 +58,7 @@ app.post('/sign', (req, res) => {
     } else {
       res.status(400).send({status: 400});
     }
-  })
+  });
 });
 
 app.get('/api/messages', (req, res) => {

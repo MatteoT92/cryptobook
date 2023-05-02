@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 function Sign(props) {
 
@@ -28,28 +29,40 @@ function Sign(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch("http://localhost:5000/sign", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                username: e.target.name.value,
-                email: e.target.email.value,
-                password: e.target.pwd.value
-            })
-        }).then(res => res.json())
-        .then(data => {
-            if (data.status === 200) {
-                alert("Sign up successful!");
-            } else {
-                alert("Sign up failed!");
-            }
-            setUsername("");
-            setEmail("");
-            setPassword("");
-        })
-    }
+        fetch(`${process.env.PUBLIC_URL}/default-img-profile.jpg`)
+        .then(res => res.blob())
+        .then(photo => {
+            let reader = new FileReader();
+            let base64Image;
+            reader.readAsDataURL(photo);
+            reader.onloadend = () => {
+              base64Image = reader.result;
+              fetch("http://localhost:5000/sign", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  username: e.target.name.value,
+                  email: e.target.email.value,
+                  password: e.target.pwd.value,
+                  photo: base64Image
+                })
+              })
+              .then(res => res.json())
+              .then(data => {
+                if (data.status === 200) {
+                  alert("Sign up successful!");
+                } else {
+                  alert("Sign up failed!");
+                }
+                setUsername("");
+                setEmail("");
+                setPassword("");
+              });
+            };
+        });
+    };
 
     const toggleVisibility = (e) => {
         let password = document.getElementById("pwd");

@@ -10,7 +10,7 @@ import Unsubscribe from "./Unsubscribe";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-function Setting(props) {
+function Setting() {
 
     return (
         <Navbar variant="dark" bg="dark" expand="lg">
