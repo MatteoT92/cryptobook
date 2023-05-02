@@ -12,8 +12,15 @@ function User(props) {
     }, [props.name]);
 
     useEffect(() => {
+        setPhoto(photo);
+    }, [photo]);
+
+    useEffect(() => {
         if (name) {
-            photoProfile();
+            const refresh = setInterval(() => {
+                photoProfile();
+            }, 1000);
+            return () => clearInterval(refresh);
         }
     }, []);
 

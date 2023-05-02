@@ -43,11 +43,13 @@ function ChangePhoto(props) {
       }).then(res => res.json())
       .then(data => {
         if (data.status === 200) {
+          setShow(false);
+          setPhoto(null);
           alert("Photo changed successfully!");
         } else {
+          setPhoto(null);
           alert("Something went wrong");
         }
-        setShow(false);
       });
     };
   }
