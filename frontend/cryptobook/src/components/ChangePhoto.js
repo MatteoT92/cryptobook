@@ -42,7 +42,12 @@ function ChangePhoto(props) {
         })
       }).then(res => res.json())
       .then(data => {
-        console.log(data);
+        if (data.status === 200) {
+          alert("Photo changed successfully!");
+        } else {
+          alert("Something went wrong");
+        }
+        setShow(false);
       });
     };
   }

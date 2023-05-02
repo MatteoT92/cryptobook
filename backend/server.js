@@ -61,6 +61,22 @@ app.post('/sign', (req, res) => {
   });
 });
 
+app.get('/api/photo', (req, res) => {
+  let data = req.query;
+  User.findOne({ username: data.username }, { photo: 1, _id: 0 })
+    .then(user => {
+      if (!user) {
+        return res.status(404).send('Utente non trovato');
+      }
+      const imageBinData = user.photo;
+      const imageBase64 = imageBinData.toString('base64');
+      res.send({photo: imageBase64});
+    })
+    .catch(err => {
+      res.status(500).send('Errore del server');
+    });
+});
+
 app.get('/api/messages', (req, res) => {
   let data = req.query;
   let messages = User.find({username: data.user}, {messages: 1, _id: 0}).select('messages').exec();

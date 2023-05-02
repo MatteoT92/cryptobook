@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
+import User from './User';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import User from './User';
 
 function Messages(props) {
 
