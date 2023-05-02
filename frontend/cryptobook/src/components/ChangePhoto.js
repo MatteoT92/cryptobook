@@ -72,7 +72,7 @@ function ChangePhoto(props) {
                 {photo ? (
                   <p>{photo.name}</p>
                 ) : (
-                  <p>Drag and drop image here, or click to select image</p>
+                  <img src={process.env.PUBLIC_URL + "/file-upload.webp"} alt="Drag and drop file" width="100%" />
                 )}
               </div>
             </Form.Group>
