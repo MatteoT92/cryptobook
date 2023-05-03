@@ -8,42 +8,46 @@ const usersSchema = new mongoose.Schema({
   email: String,
   photo: Buffer,
   typePhoto: String,
-  friends: [{
-    username: String
-  }]
+  friends: [
+    {
+      username: String,
+    },
+  ],
 });
 
 const messageSchema = new mongoose.Schema({
   sender: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+    ref: "User",
+    required: true,
   },
   receiver: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+    ref: "User",
+    required: true,
   },
   message: {
     type: String,
-    required: true
-  }, 
+    required: true,
+  },
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 const chatSchema = new mongoose.Schema({
-  members: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }],
-  messages: [messageSchema]
+  members: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  messages: [messageSchema],
 });
 
-const User = mongoose.model('User', usersSchema);
-const Message = mongoose.model('Message', messageSchema);
-const Chat = mongoose.model('Chat', chatSchema);
+const User = mongoose.model("User", usersSchema);
+const Message = mongoose.model("Message", messageSchema);
+const Chat = mongoose.model("Chat", chatSchema);
 
-module.exports = {User, Message, Chat};
+module.exports = { User, Message, Chat };

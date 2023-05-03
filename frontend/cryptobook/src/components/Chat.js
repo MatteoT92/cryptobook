@@ -65,17 +65,21 @@ function Chat(props) {
     const messagesChat = () => {
         let user = sessionStorage.getItem("user");
         let friend = sessionStorage.getItem("friend");
-        fetch(`http://localhost:5000/api/messages?user=${user}&friend=${friend}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        .then(res => res.json())
-        .then(data => {
-            setMessages(data.messages);
-        })
-        .catch(err => console.log(err));     
+        if (friend) {
+            fetch(`http://localhost:5000/api/messages?user=${user}&friend=${friend}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                setMessages(data.messages);
+            })
+            .catch(err => console.log(err));
+        } else {
+            setMessages([]);
+        }
     }
 
     const friendsChat = () => {
