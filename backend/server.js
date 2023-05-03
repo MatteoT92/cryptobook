@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 
 // Database MongoDB
-const User = require('./database');
+const {User, Chat} = require('./database');
 
 // Setting CORS policy
 const cors = require("cors");
@@ -80,11 +80,25 @@ app.get('/api/photo', (req, res) => {
 
 app.get('/api/messages', (req, res) => {
   let data = req.query;
-  let messages = User.find({username: data.user}, {messages: 1, _id: 0}).select('messages').exec();
-  messages.then(result => {
-    let messagesFiltered = result[0].messages.filter(msg => msg.receiver === data.friend);
-    res.send({messages: messagesFiltered});
-  });
+  if (data.user && data.friend) {
+    let users = User.find({username: {$in: [data.user, data.friend]}}, {_id: 1}).select('_id').exec();
+    users.then(result => {
+      const user1 = result[0]._id;
+      const user2 = result[1]._id;
+      const messages = Chat.findOne({
+                                      $and: [
+                                        {members: user1},
+                                        {members: user2}
+                                      ]
+                                    })
+                                    .populate('messages.sender', 'username')
+                                    .populate('messages.receiver', 'username')
+                                    .exec();
+      messages.then(result => {
+        res.send(result);
+      });
+    });
+  }
 });
 
 app.post('/api/msg/encrypt', (req, res) => {
@@ -105,9 +119,25 @@ app.post('/api/msg/decrypt', (req, res) => {
 
 app.post('/api/msg/send', (req, res) => {
   let msg = req.body;
-  let msgSended = User.updateOne({username: msg.sender}, {$push: {messages: msg}});
-  msgSended.then(result => {
-    res.send({status: 200});
+  let users = User.find({username: {$in: [msg.user, msg.friend]}}, {_id: 1}).select('_id').exec();
+  users.then(result => {
+    const user1 = result[0]._id;
+    const user2 = result[1]._id;
+    const chat = Chat.findOne({
+                                $and: [
+                                        {members: user1},
+                                        {members: user2}
+                                      ]
+                              }).exec();
+    chat.then(result => {
+      if (!result) {
+        result = new Chat({members: [user1, user2]});
+        result.save();
+      }
+      result.messages.push(msg);
+      result.save();
+      res.send({status: 200});
+    });
   });
 });
 

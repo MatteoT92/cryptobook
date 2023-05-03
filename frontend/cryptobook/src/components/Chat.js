@@ -3,6 +3,7 @@ import Messages from './Messages';
 import Friends from './Friends';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 function Chat(props) {
 
@@ -16,6 +17,11 @@ function Chat(props) {
         setMessage(message);
         setKey(key);
     }, [message, key]);
+
+    useEffect(() => {
+        setMessages([]);
+        messagesChat();
+    }, [friend]);
 
     useEffect(() => {
         const refresh = setInterval(() => {
@@ -45,8 +51,7 @@ function Chat(props) {
             body: JSON.stringify({
                 sender: sessionStorage.getItem("user"),
                 receiver: sessionStorage.getItem("friend"),
-                message: message,
-                date: new Date().toISOString()
+                message: message
             })
         }).then(res => res.json())
         .then(data => {
@@ -65,12 +70,13 @@ function Chat(props) {
             headers: {
                 "Content-Type": "application/json"
             }
-            })
-            .then(res => res.json())
-            .then(data => {
-                setMessages(data.messages);
-            })
-            .catch(err => console.log(err));     
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data.messages);
+            setMessages(data.messages);
+        })
+        .catch(err => console.log(err));     
     }
 
     const friendsChat = () => {
@@ -80,12 +86,12 @@ function Chat(props) {
             headers: {
                 "Content-Type": "application/json"
             }
-            })
-            .then(res => res.json())
-            .then(data => {
-                setFriends(data.friends);
-            })
-            .catch(err => console.log(err));     
+        })
+        .then(res => res.json())
+        .then(data => {
+            setFriends(data.friends);
+        })
+        .catch(err => console.log(err));     
     }
 
     const encryptMessage = (e) => {
