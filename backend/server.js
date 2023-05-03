@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 
 // Database MongoDB
-const {User, Chat} = require('./database');
+const {User, Message, Chat} = require('./database');
 
 // Setting CORS policy
 const cors = require("cors");
@@ -119,7 +119,7 @@ app.post('/api/msg/decrypt', (req, res) => {
 
 app.post('/api/msg/send', (req, res) => {
   let msg = req.body;
-  let users = User.find({username: {$in: [msg.user, msg.friend]}}, {_id: 1}).select('_id').exec();
+  let users = User.find({username: {$in: [msg.sender, msg.receiver]}}, {_id: 1}).select('_id').exec();
   users.then(result => {
     const user1 = result[0]._id;
     const user2 = result[1]._id;
@@ -134,7 +134,12 @@ app.post('/api/msg/send', (req, res) => {
         result = new Chat({members: [user1, user2]});
         result.save();
       }
-      result.messages.push(msg);
+      const message = new Message({
+        sender: user1,
+        receiver: user2,
+        message: msg.message
+      });
+      result.messages.push(message);
       result.save();
       res.send({status: 200});
     });

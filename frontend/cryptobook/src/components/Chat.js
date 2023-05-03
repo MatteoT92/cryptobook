@@ -73,7 +73,6 @@ function Chat(props) {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data.messages);
             setMessages(data.messages);
         })
         .catch(err => console.log(err));     

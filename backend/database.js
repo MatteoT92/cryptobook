@@ -30,7 +30,7 @@ const messageSchema = new mongoose.Schema({
   }, 
   date: {
     type: Date,
-    default: new Date().toISOString()
+    default: Date.now
   }
 });
 
@@ -46,4 +46,4 @@ const User = mongoose.model('User', usersSchema);
 const Message = mongoose.model('Message', messageSchema);
 const Chat = mongoose.model('Chat', chatSchema);
 
-module.exports = {User, Chat};
+module.exports = {User, Message, Chat};
