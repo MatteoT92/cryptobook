@@ -26,16 +26,16 @@ function Friends(props) {
     }
 
     return (
-        <div>
+        <div className="box-friends m-1">
             <div>
-                <div className="d-flex m-1" role="search">
+                <div className="d-flex mb-1" role="search">
                     <input className="form-control" type="search" id="search" placeholder="Search" value={search} onChange={handleSearch} />
                     <button className="btn btn-light" type="button" onClick={filteredFriends}>
                         <i className="bi bi-search"></i>
                     </button>
                 </div>
             </div>
-            <div className="box-friends">
+            <div className="friends">
                 {friends.map((friend, i) => (
                     <div className="friend" key={i} onClick={() => sessionStorage.setItem("friend", friend.username)}>
                         <User name={friend.username} />

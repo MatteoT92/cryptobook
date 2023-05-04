@@ -108,7 +108,6 @@ app.get("/api/messages", (req, res) => {
     .select("_id")
     .exec();
   users.then((result) => {
-    console.log(result);
     const user1 = result[0]._id;
     const user2 = result[1]._id;
     const messages = Chat.findOne({

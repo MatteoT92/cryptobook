@@ -79,10 +79,16 @@ code {
 }
 
 .box-friends {
+  height: 500px;
+  min-height: 500px;
+  max-height: 500px;
+}
+
+.friends {
   overflow-y: auto;
-  height: 300px;
-  min-height: 300px;
-  max-height: 300px;
+  height: 450px;
+  min-height: 450px;
+  max-height: 450px;
 }
 
 .friend {

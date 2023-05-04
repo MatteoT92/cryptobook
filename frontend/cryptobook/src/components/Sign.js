@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-function Sign(props) {
+function Sign() {
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
