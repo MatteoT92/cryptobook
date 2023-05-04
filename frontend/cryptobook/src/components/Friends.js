@@ -28,7 +28,7 @@ function Friends(props) {
     return (
         <div className="box-friends m-1">
             <div>
-                <div className="d-flex mb-1" role="search">
+                <div className="d-flex mb-2" role="search">
                     <input className="form-control" type="search" id="search" placeholder="Search" value={search} onChange={handleSearch} />
                     <button className="btn btn-light" type="button" onClick={filteredFriends}>
                         <i className="bi bi-search"></i>
