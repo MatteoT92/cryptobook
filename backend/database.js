@@ -10,8 +10,11 @@ const usersSchema = new mongoose.Schema({
   typePhoto: String,
   friends: [
     {
-      username: String,
-    },
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }
+    }
   ],
 });
 
@@ -19,31 +22,31 @@ const messageSchema = new mongoose.Schema({
   sender: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true,
+    required: true
   },
   receiver: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true,
+    required: true
   },
   message: {
     type: String,
-    required: true,
+    required: true
   },
   date: {
     type: Date,
-    default: Date.now,
-  },
+    default: Date.now
+  }
 });
 
 const chatSchema = new mongoose.Schema({
   members: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
+      ref: "User"
+    }
   ],
-  messages: [messageSchema],
+  messages: [messageSchema]
 });
 
 const User = mongoose.model("User", usersSchema);

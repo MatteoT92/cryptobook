@@ -21,7 +21,7 @@ function Friends(props) {
     }
 
     const filteredFriends = (e) => {
-        let searchedFriends = friends.filter(friend => friend.username.toLowerCase().includes(search.toLowerCase()));
+        let searchedFriends = friends.filter(friend => friend.user.username.toLowerCase().includes(search.toLowerCase()));
         setFriends(searchedFriends);
     }
 
@@ -37,8 +37,8 @@ function Friends(props) {
             </div>
             <div className="friends">
                 {friends.map((friend, i) => (
-                    <div className="friend" key={i} onClick={() => sessionStorage.setItem("friend", friend.username)}>
-                        <User name={friend.username} />
+                    <div className="friend" key={i} onClick={() => sessionStorage.setItem("friend", friend.user.username)}>
+                        <User name={friend.user.username} />
                     </div>
                 ))}
             </div>

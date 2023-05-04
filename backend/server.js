@@ -172,6 +172,7 @@ app.post("/api/msg/send", async (req, res) => {
 app.get("/api/friends", (req, res) => {
   let data = req.query;
   let friends = User.find({ username: data.user }, { friends: 1, _id: 0 })
+    .populate("friends.user", "username")
     .select("friends")
     .exec();
   friends.then((result) => {
