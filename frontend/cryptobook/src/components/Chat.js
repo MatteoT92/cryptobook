@@ -5,7 +5,7 @@ import Friends from './Friends';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-function Chat(props) {
+function Chat() {
 
     const [message, setMessage] = useState("");
     const [key, setKey] = useState("");

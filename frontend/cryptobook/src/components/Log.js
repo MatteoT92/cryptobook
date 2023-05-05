@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import User from './User';
 import Setting from './Setting';
+import Users from './Users';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -67,6 +68,7 @@ function Log(props) {
         <div>
           <div className="d-flex">
             <User name={username} />
+            <Users />
             <Setting />
             <button className="btn" onClick={logout}>
               <i className="bi bi-x-circle-fill h1 logout"></i>

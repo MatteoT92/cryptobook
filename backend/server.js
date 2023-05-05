@@ -236,5 +236,23 @@ app.post("/api/settings/unsubscribe", (req, res) => {
   });
 });
 
+app.get("/api/users", async (req, res) => {
+  let users = await User.find({}, { username: 1, _id: 0 }).select("username").exec();
+  res.send(users);
+});
+
+app.post("/api/users", async (req, res) => {
+  let data = req.body;
+  let sender = await User.find({username: data.sender}, { followRequests: 1, _id: 1})
+    .select("followRequests").exec();
+  let receiver = await User.find({username: data.receiver}, { followRequests: 1, _id: 1})
+    .select("followRequests").exec();
+  sender[0].followRequests.sended.push(receiver[0]._id);
+  await sender[0].save();
+  receiver[0].followRequests.received.push(sender[0]._id);
+  await receiver[0].save();
+  res.send({ status: 200 });
+});
+
 // Start server
 app.listen(5000);

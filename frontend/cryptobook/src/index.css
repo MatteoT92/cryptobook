@@ -45,6 +45,12 @@ code {
   border: none;
 }
 
+.people {
+  color: blue;
+  background-color: transparent;
+  border: none;
+}
+
 .claim {
   color: white;
 }

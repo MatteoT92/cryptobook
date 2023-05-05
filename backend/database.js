@@ -16,6 +16,20 @@ const usersSchema = new mongoose.Schema({
       }
     }
   ],
+  followRequests: {
+    sended: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }
+    ],
+    received: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }
+    ]
+  }
 });
 
 const messageSchema = new mongoose.Schema({
