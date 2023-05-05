@@ -4,6 +4,8 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import UsersToFollow from "./UsersToFollow";
+import FollowRequestsSended from "./FollowRequestsSended";
+import FollowRequestsReceived from "./FollowRequestsReceived";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -26,10 +28,10 @@ function Users() {
                                 <UsersToFollow />
                             </NavDropdown.Item>
                             <NavDropdown.Item href="#">
-                                opt2
+                                <FollowRequestsSended />
                             </NavDropdown.Item>
                             <NavDropdown.Item href="#">
-                                opt3
+                                <FollowRequestsReceived />
                             </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>

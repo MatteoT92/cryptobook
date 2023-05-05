@@ -254,5 +254,23 @@ app.post("/api/users", async (req, res) => {
   res.send({ status: 200 });
 });
 
+app.get("/api/users/:user/followrequests/sended", async (req, res) => {
+  let data = req.params;
+  let requestSended = await User.find({username: data.user}, { followRequests: 1, _id: 1})
+    .populate("followRequests.sended", "username")
+    .select("followRequests")
+    .exec();
+  res.send(requestSended[0].followRequests.sended);
+});
+
+app.get("/api/users/:user/followrequests/received", async (req, res) => {
+  let data = req.params;
+  let requestReceived = await User.find({username: data.user}, { followRequests: 1, _id: 1})
+    .populate("followRequests.received", "username")
+    .select("followRequests")
+    .exec();
+  res.send(requestReceived[0].followRequests.received);
+});
+
 // Start server
 app.listen(5000);
