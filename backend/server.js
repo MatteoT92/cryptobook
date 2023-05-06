@@ -272,5 +272,32 @@ app.get("/api/users/:user/followrequests/received", async (req, res) => {
   res.send(requestReceived[0].followRequests.received);
 });
 
+app.get("/api/users/:user/:friend", async (req, res) => {
+  let friendToSearch = await User.findOne({username: req.params.friend}, { _id: 1}).exec();
+  let user = await User.findOne({username: req.params.user}, { username: 1, followRequests: 1, friends: 1, _id: 1}).exec();
+  let isFriend = false;
+  let isFollowRequestSended = false;
+  let isFollowRequestReceived = false;
+  user.friends.filter((friend) => {
+    if (friendToSearch._id.toString() === friend.user.toString()) {
+      isFriend = true;
+      return isFriend;
+    }
+  });
+  user.followRequests.sended.filter((friend) => {
+    if (friendToSearch._id.toString() === friend._id.toString()) {
+      isFollowRequestSended = true;
+      return isFollowRequestSended;
+    }
+  });
+  user.followRequests.received.filter((friend) => {
+    if (friendToSearch._id.toString() === friend._id.toString()) {
+      isFollowRequestReceived = true;
+      return isFollowRequestReceived;
+    }
+  });
+  res.send({isFriend: isFriend, isFollowRequestSended: isFollowRequestSended, isFollowRequestReceived: isFollowRequestReceived });
+});
+
 // Start server
 app.listen(5000);

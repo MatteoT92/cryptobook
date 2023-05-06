@@ -6,10 +6,12 @@ function UserCard(props) {
 
     const [username, setUsername] = useState(props.username);
     const [photo, setPhoto] = useState("");
+    const [check, setCheck] = useState({});
 
     useEffect(() => {
         setUsername(props.username);
         photoProfile();
+        checkOnUser();
     }, [props.username]);
 
     useEffect(() => {
@@ -26,6 +28,19 @@ function UserCard(props) {
         .then(data => {
             setPhoto(`data:image/${data.typePhoto};base64,${data.photo}`);
         });
+    }
+
+    const checkOnUser = () => {
+        fetch(`http://localhost:5000/api/users/${sessionStorage.getItem("user")}/${username}`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => res.json())
+        .then(data => {
+            setCheck(data);
+        })
+        .catch(err => console.log(err));
     }
 
     const followUser = () => {
