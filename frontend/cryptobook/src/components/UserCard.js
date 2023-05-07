@@ -64,17 +64,88 @@ function UserCard(props) {
         .catch(err => console.log(err));
     }
 
-    return (
-        <Card bg="dark" className="text-center">
-            <Card.Img variant="top" src={photo} />
-            <Card.Body>
-                <Card.Title>
-                    <code>{username}</code>
-                </Card.Title>
-                <Button variant="primary" onClick={followUser}>Follow</Button>
-            </Card.Body>
-        </Card>
-    )
+    const unfollowUser = () => {
+        fetch("http://localhost:5000/api/friends", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                user: sessionStorage.getItem("user"),
+                friend: username
+            })
+        }).then(res => res.json())
+        .then(data => {
+            if (data.status === 200) {
+                alert("Your request has been sent");
+             } else {
+                 alert("Something went wrong");
+             }
+        });
+    }
+
+    const cancelFollowRequestSended = () => {
+        
+    }
+
+    const acceptFollowRequestReceived = () => {
+        
+    }
+
+    const denyFollowRequestReceived = () => {
+        
+    }
+
+    if (!check.isFriend && !check.isFollowRequestSended && !check.isFollowRequestReceived) {
+        return (
+            <Card bg="dark" className="text-center">
+                <Card.Img variant="top" src={photo} />
+                <Card.Body>
+                    <Card.Title>
+                        <code>{username}</code>
+                    </Card.Title>
+                    <Button variant="primary" onClick={followUser}>Follow</Button>
+                </Card.Body>
+            </Card>
+        )
+    } else if (!check.isFriend && check.isFollowRequestSended && !check.isFollowRequestReceived) {
+        return (
+            <Card bg="dark" className="text-center">
+                <Card.Img variant="top" src={photo} />
+                <Card.Body>
+                    <Card.Title>
+                        <code>{username}</code>
+                    </Card.Title>
+                    <Button variant="danger" onClick={cancelFollowRequestSended}>Cancel</Button>
+                </Card.Body>
+            </Card>
+        )
+    } else if (!check.isFriend && !check.isFollowRequestSended && check.isFollowRequestReceived) {
+        return (
+            <Card bg="dark" className="text-center">
+                <Card.Img variant="top" src={photo} />
+                <Card.Body>
+                    <Card.Title>
+                        <code>{username}</code>
+                    </Card.Title>
+                    <Button variant="success" onClick={acceptFollowRequestReceived}>Accept</Button>
+                    <Button variant="danger" onClick={denyFollowRequestReceived}>Deny</Button>
+                </Card.Body>
+            </Card>
+        )
+    } else {
+        return (
+            <Card bg="dark" className="text-center">
+                <Card.Img variant="top" src={photo} />
+                <Card.Body>
+                    <Card.Title>
+                        <code>{username}</code>
+                    </Card.Title>
+                    <Button variant="danger" onClick={unfollowUser}>Unfollow</Button>
+                </Card.Body>
+            </Card>
+        )
+    }
 
 }
 

@@ -180,6 +180,18 @@ app.get("/api/friends", (req, res) => {
   });
 });
 
+app.post("/api/friends", async (req, res) => {
+  let data = req.body;
+  let friend = await User.findOne({ username: data.friend }, { _id: 1 }).exec();
+  let user = await User.findOneAndUpdate({ username: data.user }, { $pull: { friends: { user: friend._id } } }, { new: true }).exec();
+  let friends = user.friends.map(f => f.user.toString() === friend._id.toString());
+  if (friends.length > 0) {
+    res.send({ status: 400 });
+  } else {
+    res.send({ status: 200 });
+  }
+});
+
 app.post("/api/settings/password", (req, res) => {
   let data = req.body;
   let passwordEncrypted = User.find(
