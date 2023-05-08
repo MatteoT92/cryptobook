@@ -47,7 +47,7 @@ function FollowRequestsSended() {
             </Button>
             <Modal show={show} onHide={handleClose} fullscreen={true}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Follow Request Sended</Modal.Title>
+                    <Modal.Title>Follow Requests Sended</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="d-flex">
                     {users.map((user, i) => (
