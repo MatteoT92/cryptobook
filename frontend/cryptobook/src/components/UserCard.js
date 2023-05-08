@@ -2,6 +2,9 @@ import React, {useEffect, useState} from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+
 function UserCard(props) {
 
     const [username, setUsername] = useState(props.username);
@@ -149,7 +152,9 @@ function UserCard(props) {
                     <Card.Title>
                         <code>{username}</code>
                     </Card.Title>
-                    <Button variant="primary" onClick={followUser}>Follow</Button>
+                    <Button variant="primary" onClick={followUser}>
+                        <i className="bi bi-person-plus-fill me-1"></i>Follow
+                    </Button>
                 </Card.Body>
             </Card>
         )
@@ -161,7 +166,9 @@ function UserCard(props) {
                     <Card.Title>
                         <code>{username}</code>
                     </Card.Title>
-                    <Button variant="danger" onClick={cancelFollowRequestSended}>Cancel</Button>
+                    <Button variant="danger" onClick={cancelFollowRequestSended}>
+                        <i className="bi bi-person-x-fill me-1"></i>Cancel
+                    </Button>
                 </Card.Body>
             </Card>
         )
@@ -173,8 +180,12 @@ function UserCard(props) {
                     <Card.Title>
                         <code>{username}</code>
                     </Card.Title>
-                    <Button variant="success" onClick={acceptFollowRequestReceived}>Accept</Button>
-                    <Button variant="danger" onClick={denyFollowRequestReceived}>Deny</Button>
+                    <Button variant="success" onClick={acceptFollowRequestReceived}>
+                        <i className="bi bi-person-check-fill me-1"></i>Accept
+                    </Button>
+                    <Button variant="danger" onClick={denyFollowRequestReceived}>
+                        <i className="bi bi-person-x-fill me-1"></i>Deny
+                    </Button>
                 </Card.Body>
             </Card>
         )
@@ -186,7 +197,9 @@ function UserCard(props) {
                     <Card.Title>
                         <code>{username}</code>
                     </Card.Title>
-                    <Button variant="danger" onClick={unfollowUser}>Unfollow</Button>
+                    <Button variant="danger" onClick={unfollowUser}>
+                        <i className="bi bi-person-dash-fill me-1"></i>Unfollow
+                    </Button>
                 </Card.Body>
             </Card>
         )
