@@ -12,7 +12,10 @@ function FollowRequestsSended() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    followRequestSended();
+    const refresh = setInterval(() => {
+        followRequestSended();
+    }, 1000);
+    return () => clearInterval(refresh);
   }, []);
 
   const handleClose = () => {
