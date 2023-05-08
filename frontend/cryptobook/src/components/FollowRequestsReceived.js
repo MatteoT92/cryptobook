@@ -39,7 +39,8 @@ function FollowRequestsReceived() {
       .catch(err => console.log(err));
   }
 
-  return (
+  if (users.length > 0) {
+    return (
         <div>
             <Button variant="dark" onClick={handleShow}>
                 <i className="bi bi-people-fill me-1"></i>Requests received
@@ -57,7 +58,25 @@ function FollowRequestsReceived() {
                 </Modal.Body>
             </Modal>
         </div>
-  )
+    )
+  } else {
+    return (
+        <div>
+            <Button variant="dark" onClick={handleShow}>
+                <i className="bi bi-people-fill me-1"></i>Requests received
+            </Button>
+            <Modal show={show} onHide={handleClose} fullscreen={true}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Follow Request Received</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="d-flex align-items-center justify-content-center">
+                    <img className="img-fluid" src={process.env.PUBLIC_URL + "/no-users.png"} alt="No requests received yet" />
+                    <h2>I'm sorry... No requests received yet</h2>
+                </Modal.Body>
+            </Modal>
+        </div>
+    )
+  }
 
 }
 
