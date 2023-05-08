@@ -39,7 +39,7 @@ code {
   border-radius: 10px;
 }
 
-.setting {
+.settings {
   color: grey;
   background-color: transparent;
   border: none;
@@ -47,6 +47,12 @@ code {
 
 .people {
   color: blue;
+  background-color: transparent;
+  border: none;
+}
+
+.posts {
+  color: white;
   background-color: transparent;
   border: none;
 }
@@ -101,4 +107,10 @@ code {
   border: 2px solid white;
   background-color: black;
   cursor: pointer;
+}
+
+.profile-img {
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
 }

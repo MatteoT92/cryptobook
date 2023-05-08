@@ -38,7 +38,7 @@ function User(props) {
 
     return (
         <div className="d-inline">
-            {photo ? <img src={photo} alt="User Profile Image" width="20%" /> : <img src={process.env.PUBLIC_URL + "/default-img-profile.jpg"} alt="User Profile Image" width="20%" />}
+            {photo ? <img className="profile-img" src={photo} alt="User Profile Image" /> : <img className="profile-img" src={process.env.PUBLIC_URL + "/default-img-profile.jpg"} alt="User Profile Image" />}
             <code>{name}</code>
         </div>
     )

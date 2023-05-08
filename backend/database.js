@@ -63,8 +63,48 @@ const chatSchema = new mongoose.Schema({
   messages: [messageSchema]
 });
 
+const postSchema = new mongoose.Schema({
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+  content: {
+    type: String,
+    required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  },
+  comments: [
+    {
+      author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+      },
+      content: {
+        type: String,
+        required: true
+      },
+      date: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
+  visibleTo: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    }
+  ]
+});
+
 const User = mongoose.model("User", usersSchema);
 const Message = mongoose.model("Message", messageSchema);
 const Chat = mongoose.model("Chat", chatSchema);
+const Post = mongoose.model("Post", postSchema);
 
-module.exports = { User, Message, Chat };
+module.exports = { User, Message, Chat, Post };

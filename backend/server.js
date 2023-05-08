@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 
 // Database MongoDB
-const { User, Message, Chat } = require("./database");
+const { User, Message, Chat, Post } = require("./database");
 
 // Setting CORS policy
 const cors = require("cors");
@@ -258,9 +258,7 @@ app.post("/api/settings/unsubscribe", (req, res) => {
 });
 
 app.get("/api/users", async (req, res) => {
-  let users = await User.find({}, { username: 1, _id: 0 })
-    .select("username")
-    .exec();
+  let users = await User.find({}, { username: 1, _id: 0 }).select("username").exec();
   res.send(users);
 });
 

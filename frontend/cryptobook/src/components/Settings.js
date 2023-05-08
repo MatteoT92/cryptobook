@@ -10,7 +10,7 @@ import Unsubscribe from "./Unsubscribe";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-function Setting() {
+function Settings() {
 
     return (
         <Navbar variant="dark" bg="dark" expand="lg">
@@ -20,7 +20,7 @@ function Setting() {
                     <Nav>
                         <NavDropdown
                         id="nav-dropdown-dark"
-                        title={<i className="bi bi-gear-fill h1 setting"></i>}
+                        title={<i className="bi bi-gear-fill h1 settings"></i>}
                         menuVariant="dark"
                         align="end"
                         >
@@ -42,4 +42,4 @@ function Setting() {
 
 }
 
-export default Setting;
+export default Settings;

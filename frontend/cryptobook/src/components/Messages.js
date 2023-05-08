@@ -56,7 +56,7 @@ function Messages(props) {
     return (
         <div>
             <div>
-                <div className="d-inline-flex">
+                <div className="d-flex justify-content-between align-items-center">
                     <User name={sessionStorage.getItem("friend")} />
                     <i className="bi bi-arrow-left-right h1"></i>
                     <User name={sessionStorage.getItem("user")} />
