@@ -180,7 +180,7 @@ function UserCard(props) {
                     <Card.Title>
                         <code>{username}</code>
                     </Card.Title>
-                    <Button variant="success" onClick={acceptFollowRequestReceived}>
+                    <Button variant="success me-2" onClick={acceptFollowRequestReceived}>
                         <i className="bi bi-person-check-fill me-1"></i>Accept
                     </Button>
                     <Button variant="danger" onClick={denyFollowRequestReceived}>

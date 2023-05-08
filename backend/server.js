@@ -141,24 +141,16 @@ app.post("/api/msg/decrypt", (req, res) => {
 app.post("/api/msg/send", async (req, res) => {
   let msg = req.body;
   try {
-    let users = await User.find(
-      { username: { $in: [msg.sender, msg.receiver] } },
-      { _id: 1 }
-    )
-      .select("_id")
-      .exec();
-    const user1 = users[0]._id;
-    const user2 = users[1]._id;
-    let chat = await Chat.findOne({
-      $and: [{ members: user1 }, { members: user2 }],
-    }).exec();
+    const sender = await User.findOne({ username: msg.sender }, { _id: 1 }).select("_id").exec();
+    const receiver = await User.findOne({ username: msg.receiver }, { _id: 1 }).select("_id").exec();
+    let chat = await Chat.findOne({$and: [{ members: sender._id }, { members: receiver._id }]}).exec();
     if (!chat) {
-      chat = new Chat({ members: [user1, user2] });
+      chat = new Chat({ members: [sender._id, receiver._id]});
       await chat.save();
     }
     const message = new Message({
-      sender: user1,
-      receiver: user2,
+      sender: sender._id,
+      receiver: receiver._id,
       message: msg.message,
     });
     chat.messages.push(message);

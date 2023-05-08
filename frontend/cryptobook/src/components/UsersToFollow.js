@@ -12,7 +12,10 @@ function UsersToFollow() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-      usersSigned();
+    const refresh = setInterval(() => {
+        usersSigned();
+    }, 1000);
+    return () => clearInterval(refresh);
   }, []);
 
   const handleClose = () => {
