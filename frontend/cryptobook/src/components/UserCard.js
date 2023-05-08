@@ -85,15 +85,60 @@ function UserCard(props) {
     }
 
     const cancelFollowRequestSended = () => {
-        
+        fetch(`http://localhost:5000/api/users/${sessionStorage.getItem("user")}/followrequests/sended`, {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                friend: username
+            })
+        }).then(res => res.json())
+        .then(data => {
+            if (data.status === 200) {
+                alert("Your request has been sent");
+             } else {
+                 alert("Something went wrong");
+             }
+        });
     }
 
     const acceptFollowRequestReceived = () => {
-        
+        fetch(`http://localhost:5000/api/users/${sessionStorage.getItem("user")}/followrequests/received`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                friend: username
+            })
+        }).then(res => res.json())
+        .then(data => {
+            if (data.status === 200) {
+                alert("Your request has been sent");
+             } else {
+                 alert("Something went wrong");
+             }
+        });
     }
 
     const denyFollowRequestReceived = () => {
-        
+        fetch(`http://localhost:5000/api/users/${sessionStorage.getItem("user")}/followrequests/received`, {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                friend: username
+            })
+        }).then(res => res.json())
+        .then(data => {
+            if (data.status === 200) {
+                alert("Your request has been sent");
+             } else {
+                 alert("Something went wrong");
+             }
+        });
     }
 
     if (!check.isFriend && !check.isFollowRequestSended && !check.isFollowRequestReceived) {

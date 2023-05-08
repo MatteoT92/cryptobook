@@ -182,13 +182,30 @@ app.get("/api/friends", (req, res) => {
 
 app.post("/api/friends", async (req, res) => {
   let data = req.body;
-  let friend = await User.findOne({ username: data.friend }, { _id: 1 }).exec();
-  let user = await User.findOneAndUpdate({ username: data.user }, { $pull: { friends: { user: friend._id } } }, { new: true }).exec();
-  let friends = user.friends.map(f => f.user.toString() === friend._id.toString());
-  if (friends.length > 0) {
+  let userId = await User.findOne({ username: data.user }, { _id: 1 }).exec();
+  let friendId = await User.findOne({ username: data.friend }, { _id: 1 }).exec();
+  let user = await User.findOneAndUpdate(
+    { username: data.user },
+    { $pull: { friends: { user: friendId._id } } },
+    { new: true }
+  ).exec();
+  let friend = await User.findOneAndUpdate(
+    { username: data.friend },
+    { $pull: { friends: { user: userId._id } } },
+    { new: true }
+  ).exec();
+  let userFriends = user.friends.map(
+    (userFriend) => userFriend.user.toString() === friendId._id.toString()
+  );
+  let friendFriends = friend.friends.map(
+    (friendFriend) => friendFriend.user.toString() === userId._id.toString()
+  );
+  if (userFriends.length > 0 && friendFriends.length > 0) {
     res.send({ status: 400 });
-  } else {
+  } else if (userFriends.length === 0 && friendFriends.length === 0) {
     res.send({ status: 200 });
+  } else {
+    res.send({ status: 400 });
   }
 });
 
@@ -249,16 +266,26 @@ app.post("/api/settings/unsubscribe", (req, res) => {
 });
 
 app.get("/api/users", async (req, res) => {
-  let users = await User.find({}, { username: 1, _id: 0 }).select("username").exec();
+  let users = await User.find({}, { username: 1, _id: 0 })
+    .select("username")
+    .exec();
   res.send(users);
 });
 
 app.post("/api/users", async (req, res) => {
   let data = req.body;
-  let sender = await User.find({username: data.sender}, { followRequests: 1, _id: 1})
-    .select("followRequests").exec();
-  let receiver = await User.find({username: data.receiver}, { followRequests: 1, _id: 1})
-    .select("followRequests").exec();
+  let sender = await User.find(
+    { username: data.sender },
+    { followRequests: 1, _id: 1 }
+  )
+    .select("followRequests")
+    .exec();
+  let receiver = await User.find(
+    { username: data.receiver },
+    { followRequests: 1, _id: 1 }
+  )
+    .select("followRequests")
+    .exec();
   sender[0].followRequests.sended.push(receiver[0]._id);
   await sender[0].save();
   receiver[0].followRequests.received.push(sender[0]._id);
@@ -268,25 +295,130 @@ app.post("/api/users", async (req, res) => {
 
 app.get("/api/users/:user/followrequests/sended", async (req, res) => {
   let data = req.params;
-  let requestSended = await User.find({username: data.user}, { followRequests: 1, _id: 1})
+  let requestSended = await User.find(
+    { username: data.user },
+    { followRequests: 1, _id: 1 }
+  )
     .populate("followRequests.sended", "username")
     .select("followRequests")
     .exec();
   res.send(requestSended[0].followRequests.sended);
 });
 
+app.delete("/api/users/:user/followrequests/sended", async (req, res) => {
+  let data = req.body;
+  let userId = await User.findOne({ username: req.params.user }, { _id: 1 }).exec();
+  let friendId = await User.findOne({ username: data.friend }, { _id: 1 }).exec();
+  let user = await User.findOneAndUpdate(
+    { username: req.params.user },
+    { $pull: { "followRequests.sended": friendId._id } },
+    { new: true }
+  );
+  let friend = await User.findOneAndUpdate(
+    { username: data.friend },
+    { $pull: { "followRequests.received": userId._id } },
+    { new: true }
+  );
+  let requestSended = user.followRequests.sended.map(
+    (reqSended) => reqSended._id.toString() === friendId._id.toString()
+  );
+  let requestReceived = friend.followRequests.received.map(
+    (reqReceived) => reqReceived._id.toString() === userId._id.toString()
+  );
+  if (requestSended.length > 0 && requestReceived.length > 0) {
+    res.send({ status: 400 });
+  } else if (requestSended.length === 0 && requestReceived.length === 0) {
+    res.send({ status: 200 });
+  } else {
+    res.send({ status: 400 });
+  }
+});
+
 app.get("/api/users/:user/followrequests/received", async (req, res) => {
   let data = req.params;
-  let requestReceived = await User.find({username: data.user}, { followRequests: 1, _id: 1})
+  let requestReceived = await User.find(
+    { username: data.user },
+    { followRequests: 1, _id: 1 }
+  )
     .populate("followRequests.received", "username")
     .select("followRequests")
     .exec();
   res.send(requestReceived[0].followRequests.received);
 });
 
+app.post("/api/users/:user/followrequests/received", async (req, res) => {
+  let data = req.body;
+  let userId = await User.findOne({ username: req.params.user }, { _id: 1 }).exec();
+  let friendId = await User.findOne({ username: data.friend }, { _id: 1 }).exec();
+  let user = await User.findOneAndUpdate(
+    { username: req.params.user },
+    { $push: { friends: {user: friendId._id} }, $pull: { "followRequests.received": friendId._id } },
+    { new: true }
+  );
+  let friend = await User.findOneAndUpdate(
+    { username: data.friend },
+    { $push: { friends: {user: userId._id} }, $pull: { "followRequests.sended": userId._id } },
+    { new: true }
+  );
+  let requestReceived = user.followRequests.received.map(
+    (reqReceived) => reqReceived._id.toString() === friendId._id.toString()
+  );
+  let userFriends = user.friends.map(
+    (f) => f.user.toString() === friendId._id.toString()
+  );
+  let requestSended = friend.followRequests.sended.map(
+    (reqSended) => reqSended._id.toString() === userId._id.toString()
+  );
+  let friendFriends = friend.friends.map(
+    (f) => f.user.toString() === userId._id.toString()
+  );
+  if ((requestReceived.length > 0 && userFriends.length === 0) && (requestSended.length > 0 && friendFriends.length === 0)) {
+    res.send({ status: 400 });
+  } else if ((requestReceived.length === 0 && userFriends.length > 0) && (requestSended.length === 0 && friendFriends.length > 0)) {
+    res.send({ status: 200 });
+  } else {
+    res.send({ status: 400 });
+  }
+});
+
+app.delete("/api/users/:user/followrequests/received", async (req, res) => {
+  let data = req.body;
+  let userId = await User.findOne({ username: req.params.user }, { _id: 1 }).exec();
+  let friendId = await User.findOne({ username: data.friend }, { _id: 1 }).exec();
+  let user = await User.findOneAndUpdate(
+    { username: req.params.user },
+    { $pull: { "followRequests.received": friendId._id } },
+    { new: true }
+  );
+  let friend = await User.findOneAndUpdate(
+    { username: data.friend },
+    { $pull: { "followRequests.sended": userId._id } },
+    { new: true }
+  );
+  let requestReceived = user.followRequests.received.map(
+    (reqReceived) => reqReceived._id.toString() === friendId._id.toString()
+  );
+  let requestSended = friend.followRequests.sended.map(
+    (reqSended) => reqSended._id.toString() === userId._id.toString()
+  );
+  if (requestReceived.length > 0 && requestSended.length > 0) {
+    res.send({ status: 400 });
+  } else if (requestReceived.length === 0 && requestSended.length === 0) {
+    res.send({ status: 200 });
+  } else {
+    res.send({ status: 400 });
+  }
+});
+
 app.get("/api/users/:user/:friend", async (req, res) => {
-  let friendToSearch = await User.findOne({username: req.params.friend}, { _id: 1}).exec();
-  let user = await User.findOne({username: req.params.user}, { username: 1, followRequests: 1, friends: 1, _id: 1}).exec();
+  let friendToSearch = await User.findOne(
+    { username: req.params.friend },
+    { _id: 1 }
+  ).exec();
+  let user = await User.findOne(
+    { username: req.params.user },
+    { username: 1, followRequests: 1, friends: 1, _id: 1 }
+  ).exec();
   let isFriend = false;
   let isFollowRequestSended = false;
   let isFollowRequestReceived = false;
@@ -308,7 +440,11 @@ app.get("/api/users/:user/:friend", async (req, res) => {
       return isFollowRequestReceived;
     }
   });
-  res.send({isFriend: isFriend, isFollowRequestSended: isFollowRequestSended, isFollowRequestReceived: isFollowRequestReceived });
+  res.send({
+    isFriend: isFriend,
+    isFollowRequestSended: isFollowRequestSended,
+    isFollowRequestReceived: isFollowRequestReceived,
+  });
 });
 
 // Start server
