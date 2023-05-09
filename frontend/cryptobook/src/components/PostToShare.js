@@ -42,7 +42,13 @@ function PostToShare(props) {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
+            if (data.status === 200) {
+                setKey("");
+                setPost("");
+                alert("Your post has been sent!");
+            } else {
+                alert("Something went wrong!");
+            }
         })
         .catch(err => console.log(err));
     }
