@@ -53,7 +53,8 @@ function Chat() {
                 receiver: sessionStorage.getItem("friend"),
                 message: message
             })
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .then(data => {
             setMessage("");
             setKey("");
@@ -109,7 +110,8 @@ function Chat() {
                 message: message,
                 key: key
             })
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .then(data => {
             setKey("");
             setMessage(data.message);

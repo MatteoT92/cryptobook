@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 
 // Database MongoDB
-const { User, Message, Chat, Post } = require("./database");
+const { User, Message, Chat, Comment, Post } = require("./database");
 
 // Setting CORS policy
 const cors = require("cors");
@@ -157,7 +157,29 @@ app.post("/api/msg/send", async (req, res) => {
     await chat.save();
     res.send({ status: 200 });
   } catch (err) {
-    res.status(500).send({ error: "Internal Server Error" });
+    res.send({ status: 500 });
+  }
+});
+
+app.post("/api/post/encrypt", (req, res) => {
+  let post = req.body;
+  let cipherText = AES.encrypt(post.message, post.key).toString();
+  res.send({ message: cipherText });
+});
+
+app.post("/api/post/send", async (req, res) => {
+  let post = req.body;
+  try {
+    const author = await User.findOne({ username: post.author }, { friends: 1, _id: 1 }).select("friends _id").exec();
+    const postToShare = new Post({
+      author: author._id,
+      content: post.content,
+      visibleTo: author.friends.map((friend) => friend.user)
+    });
+    await postToShare.save();
+    res.send({ status: 200 });
+  } catch (err) {
+    res.send({ status: 500 });
   }
 });
 
@@ -433,7 +455,7 @@ app.get("/api/users/:user/:friend", async (req, res) => {
   res.send({
     isFriend: isFriend,
     isFollowRequestSended: isFollowRequestSended,
-    isFollowRequestReceived: isFollowRequestReceived,
+    isFollowRequestReceived: isFollowRequestReceived
   });
 });
 
