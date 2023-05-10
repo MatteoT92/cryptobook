@@ -83,6 +83,11 @@ code {
   border-radius: 10px;
 }
 
+.post-received {
+  background-color: transparent;
+  color: white;
+}
+
 .box-messages {
   overflow-y: auto;
   height: 300px;
@@ -112,5 +117,11 @@ code {
 .profile-img {
   width: 60px;
   height: 60px;
+  object-fit: cover;
+}
+
+.profile-card-img {
+  width: 120px;
+  height: 120px;
   object-fit: cover;
 }

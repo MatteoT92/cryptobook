@@ -13,7 +13,7 @@ function Post(props) {
     const [comments, setComments] = useState(props.data.comments);
     const [visibleTo, setVisibleTo] = useState(props.data.visibleTo);
     const [key, setKey] = useState("");
-    const [idxPost, setIdxPost] = useState(props.key);
+    const [idxPost, setIdxPost] = useState(props.idx);
 
     useEffect(() => {
         setAuthor(props.data.author.username);
@@ -28,8 +28,8 @@ function Post(props) {
     }, [key]);
 
     useEffect(() => {
-        setIdxPost(props.key);
-    }, [props.key]);
+        setIdxPost(props.idx);
+    }, [props.idx]);
 
     const handleKey = (e) => {
         setKey(e.target.value);
@@ -68,13 +68,11 @@ function Post(props) {
     }
 
     return (
-        <Card>
+        <Card bg="dark" className="m-1">
             <Card.Body>
-                <Card.Title>
-                    <div className="row d-flex m-1">
-                        <i className="bi bi-person-fill"></i><h6 className="ms-1 me-1">{author}</h6>
-                        <i className="bi bi-clock"></i><h6 className="ms-1">{new Date(date).toLocaleString()}</h6>
-                    </div>
+                <Card.Title className="d-flex m-1">
+                    <i className="bi bi-person-fill"></i><h6 className="ms-1 me-1">{author}</h6>
+                    <i className="bi bi-clock"></i><h6 className="ms-1">{new Date(date).toLocaleDateString()}</h6>
                 </Card.Title>
                 <Card.Text>
                     <code className="m-1" id={`ciphered-post${idxPost}`}>{content}</code>

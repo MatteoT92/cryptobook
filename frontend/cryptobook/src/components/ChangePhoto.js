@@ -40,7 +40,8 @@ function ChangePhoto(props) {
           username: sessionStorage.getItem('user'),
           photo: base64Image
         })
-      }).then(res => res.json())
+      })
+      .then(res => res.json())
       .then(data => {
         if (data.status === 200) {
           setShow(false);
@@ -50,7 +51,8 @@ function ChangePhoto(props) {
           setPhoto(null);
           alert("Something went wrong");
         }
-      });
+      })
+      .catch(err => console.log(err));
     };
   }
 

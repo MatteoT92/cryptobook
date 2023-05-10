@@ -27,10 +27,12 @@ function UserCard(props) {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .then(data => {
             setPhoto(`data:image/${data.typePhoto};base64,${data.photo}`);
-        });
+        })
+        .catch(err => console.log(err));
     }
 
     const checkOnUser = () => {
@@ -39,7 +41,8 @@ function UserCard(props) {
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .then(data => {
             setCheck(data);
         })
@@ -56,10 +59,11 @@ function UserCard(props) {
                 sender: sessionStorage.getItem("user"),
                 receiver: username
             })
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .then(data => {
             if (data.status === 200) {
-               alert("Your request has been sent");
+                alert("Your request has been sent");
             } else {
                 alert("Something went wrong");
             }
@@ -77,14 +81,16 @@ function UserCard(props) {
                 user: sessionStorage.getItem("user"),
                 friend: username
             })
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .then(data => {
             if (data.status === 200) {
                 alert("Your request has been sent");
-             } else {
-                 alert("Something went wrong");
-             }
-        });
+            } else {
+                alert("Something went wrong");
+            }
+        })
+        .catch(err => console.log(err));
     }
 
     const cancelFollowRequestSended = () => {
@@ -96,14 +102,16 @@ function UserCard(props) {
             body: JSON.stringify({
                 friend: username
             })
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .then(data => {
             if (data.status === 200) {
                 alert("Your request has been sent");
-             } else {
-                 alert("Something went wrong");
-             }
-        });
+            } else {
+                alert("Something went wrong");
+            }
+        })
+        .catch(err => console.log(err));
     }
 
     const acceptFollowRequestReceived = () => {
@@ -115,14 +123,16 @@ function UserCard(props) {
             body: JSON.stringify({
                 friend: username
             })
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .then(data => {
             if (data.status === 200) {
                 alert("Your request has been sent");
-             } else {
-                 alert("Something went wrong");
-             }
-        });
+            } else {
+                alert("Something went wrong");
+            }
+        })
+        .catch(err => console.log(err));
     }
 
     const denyFollowRequestReceived = () => {
@@ -134,20 +144,22 @@ function UserCard(props) {
             body: JSON.stringify({
                 friend: username
             })
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .then(data => {
             if (data.status === 200) {
                 alert("Your request has been sent");
-             } else {
-                 alert("Something went wrong");
-             }
-        });
+            } else {
+                alert("Something went wrong");
+            }
+        })
+        .catch(err => console.log(err));
     }
 
     if (!check.isFriend && !check.isFollowRequestSended && !check.isFollowRequestReceived) {
         return (
             <Card bg="dark" className="text-center">
-                <Card.Img variant="top" src={photo} />
+                <Card.Img variant="top" className="profile-card-img" src={photo} />
                 <Card.Body>
                     <Card.Title>
                         <code>{username}</code>
@@ -161,7 +173,7 @@ function UserCard(props) {
     } else if (!check.isFriend && check.isFollowRequestSended && !check.isFollowRequestReceived) {
         return (
             <Card bg="dark" className="text-center">
-                <Card.Img variant="top" src={photo} />
+                <Card.Img variant="top" className="profile-card-img" src={photo} />
                 <Card.Body>
                     <Card.Title>
                         <code>{username}</code>
@@ -175,7 +187,7 @@ function UserCard(props) {
     } else if (!check.isFriend && !check.isFollowRequestSended && check.isFollowRequestReceived) {
         return (
             <Card bg="dark" className="text-center">
-                <Card.Img variant="top" src={photo} />
+                <Card.Img variant="top" className="profile-card-img" src={photo} />
                 <Card.Body>
                     <Card.Title>
                         <code>{username}</code>
@@ -192,7 +204,7 @@ function UserCard(props) {
     } else {
         return (
             <Card bg="dark" className="text-center">
-                <Card.Img variant="top" src={photo} />
+                <Card.Img variant="top" className="profile-card-img" src={photo} />
                 <Card.Body>
                     <Card.Title>
                         <code>{username}</code>

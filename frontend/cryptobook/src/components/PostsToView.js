@@ -58,14 +58,16 @@ function PostsToView() {
             <Button variant="dark" onClick={handleShow}>
                 <i className="bi bi-stickies-fill me-1"></i>Posts Published
             </Button>
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose} fullscreen={true}>
                 <Modal.Header closeButton>
                     <Modal.Title>Posts Published</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className="post-received">
+                    <div className="d-flex">
                     {posts.map((post, i) => (
-                        <Post data={post} key={i} />
+                        <Post data={post} idx={i} key={i} />
                     ))}
+                    </div>
                 </Modal.Body>
             </Modal>
         </div>
