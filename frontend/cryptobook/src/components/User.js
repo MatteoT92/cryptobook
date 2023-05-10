@@ -9,37 +9,31 @@ function User(props) {
 
     useEffect(() => {
         setName(props.name);
-    }, [props.name]);
-
-    useEffect(() => {
-        setPhoto(photo);
-    }, [photo]);
-
-    useEffect(() => {
-        if (name) {
-            const refresh = setInterval(() => {
-                photoProfile();
-            }, 1000);
-            return () => clearInterval(refresh);
-        }
-    }, []);
+        photoProfile();
+    }, [props.name, name]);
 
     const photoProfile = () => {
-        fetch(`http://localhost:5000/api/photo?username=${name}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => res.json())
-        .then(data => {
-            setPhoto(`data:image/${data.typePhoto};base64,${data.photo}`);
-        });
+        if (name) {
+            fetch(`http://localhost:5000/api/photo?username=${name}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                setPhoto(`data:image/${data.typePhoto};base64,${data.photo}`);
+            })
+            .catch(err => console.log(err));
+        } else {
+            setPhoto(`${process.env.PUBLIC_URL}/default-img-profile.jpg`);
+        }
     }
 
     return (
         <div className="d-inline">
-            {photo ? <img className="profile-img" src={photo} alt="User Profile Image" /> : <img className="profile-img" src={process.env.PUBLIC_URL + "/default-img-profile.jpg"} alt="User Profile Image" />}
-            <code>{name}</code>
+            <img className="profile-img m-1" src={photo} alt="User Profile Image" />
+            <code className="ms-1">{name}</code>
         </div>
     )
 

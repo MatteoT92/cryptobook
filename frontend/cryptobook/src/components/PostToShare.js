@@ -6,11 +6,16 @@ import Modal from 'react-bootstrap/Modal';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-function PostToShare(props) {
+function PostToShare() {
 
     const [show, setShow] = useState(false);
     const [post, setPost] = useState("");
     const [key, setKey] = useState("");
+
+    useEffect(() => {
+        setPost(post);
+        setKey(key);
+    }, [post, key]);
 
     const handleClose = () => {
         setShow(false);

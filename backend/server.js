@@ -167,6 +167,16 @@ app.post("/api/post/encrypt", (req, res) => {
   res.send({ message: cipherText });
 });
 
+app.post("/api/post/decrypt", (req, res) => {
+  let post = req.body;
+  let decryptedText = AES.decrypt(post.message, post.key).toString(enc.Utf8);
+  if (decryptedText.length > 0) {
+    res.send({ message: decryptedText });
+  } else {
+    res.send({ message: post.message });
+  }
+});
+
 app.post("/api/post/send", async (req, res) => {
   let post = req.body;
   try {
@@ -181,6 +191,17 @@ app.post("/api/post/send", async (req, res) => {
   } catch (err) {
     res.send({ status: 500 });
   }
+});
+
+app.get("/api/posts", async (req, res) => {
+  let data = req.query;
+  let user = await User.findOne({ username: data.user }, { _id: 1 }).select("_id").exec();
+  let posts = await Post.find({}, { visibleTo: 0, _id: 0 })
+    .where("visibleTo").in([user._id])
+    .populate("author", "username")
+    .select("author content date comments")
+    .exec();
+  res.send(posts);
 });
 
 app.get("/api/friends", (req, res) => {

@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import User from './User';
 import Settings from './Settings';
 import Users from './Users';
+import Posts from './Posts';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import Posts from './Posts';
 
 function Log(props) {
 
@@ -29,12 +29,13 @@ function Log(props) {
           username: e.target.username.value,
           password: e.target.password.value
         })
-      }).then(res => res.json())
-        .then(data => {
-          setUser(data.username);
-          sessionStorage.setItem("user", data.username);
-        })
-        .catch(err => console.log(err));
+      })
+      .then(res => res.json())
+      .then(data => {
+        setUser(data.username);
+        sessionStorage.setItem("user", data.username);
+      })
+      .catch(err => console.log(err));
     }
 
     const handleChangeInputUsername = (e) => {

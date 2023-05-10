@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import PostToShare from "./PostToShare";
+import PostsToView from "./PostsToView";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -29,7 +30,7 @@ function Posts() {
                                 opt2
                             </NavDropdown.Item>
                             <NavDropdown.Item href="#">
-                                opt3
+                                <PostsToView />
                             </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>

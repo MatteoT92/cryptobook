@@ -48,7 +48,7 @@ function UsersToFollow() {
             </Button>
             <Modal show={show} onHide={handleClose} fullscreen={true}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Users To Follow</Modal.Title>
+                    <Modal.Title>Users</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="d-flex">
                     {users.map((user, i) => (
