@@ -193,13 +193,46 @@ app.post("/api/post/send", async (req, res) => {
   }
 });
 
+app.post("/api/comment/encrypt", (req, res) => {
+  let comment = req.body;
+  let cipherText = AES.encrypt(comment.message, comment.key).toString();
+  res.send({ message: cipherText });
+});
+
+app.post("/api/comment/decrypt", (req, res) => {
+  let comment = req.body;
+  let decryptedText = AES.decrypt(comment.message, comment.key).toString(enc.Utf8);
+  if (decryptedText.length > 0) {
+    res.send({ message: decryptedText });
+  } else {
+    res.send({ message: comment.message });
+  }
+});
+
+app.post("/api/comment/send", async (req, res) => {
+  let comment = req.body;
+  try {
+    const author = await User.findOne({ username: comment.author }, {  _id: 1 }).select("_id").exec();
+    const post = await Post.findOne({ _id: comment.idPost }, { comments: 1 }).select("comments").exec();
+    const commentToPost = new Comment({
+      author: author._id,
+      content: comment.content
+    });
+    post.comments.push(commentToPost);
+    await post.save();
+    res.send({ status: 200 });
+  } catch (err) {
+    res.send({ status: 500 });
+  }
+});
+
 app.get("/api/posts", async (req, res) => {
   let data = req.query;
   let user = await User.findOne({ username: data.user }, { _id: 1 }).select("_id").exec();
-  let posts = await Post.find({}, { visibleTo: 0, _id: 0 })
+  let posts = await Post.find({}, { visibleTo: 0 })
     .where("visibleTo").in([user._id])
     .populate("author", "username")
-    .select("author content date comments")
+    .select("author content date comments _id")
     .exec();
   res.send(posts);
 });
@@ -207,10 +240,10 @@ app.get("/api/posts", async (req, res) => {
 app.get("/api/posts/:user", async (req, res) => {
   let data = req.params;
   let user = await User.findOne({ username: data.user }, { _id: 1 }).select("_id").exec();
-  let posts = await Post.find({}, { visibleTo: 0, _id: 0 })
+  let posts = await Post.find({}, { visibleTo: 0 })
     .where("author").equals(user._id)
     .populate("author", "username")
-    .select("author content date comments")
+    .select("author content date comments _id")
     .exec();
   res.send(posts);
 });
@@ -452,6 +485,11 @@ app.delete("/api/users/:user/followrequests/received", async (req, res) => {
   } else {
     res.send({ status: 400 });
   }
+});
+
+app.get("/api/users/:user", async (req, res) => {
+  let user = await User.findOne({ _id: req.params.user }, { username: 1 }).exec();
+  res.send(user);
 });
 
 app.get("/api/users/:user/:friend", async (req, res) => {

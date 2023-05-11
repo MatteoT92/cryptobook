@@ -71,7 +71,7 @@ code {
   color: white;
 }
 
-#message, #post {
+#message, #post, #comment {
   background-color: black;
   color: green;
   resize: none;
