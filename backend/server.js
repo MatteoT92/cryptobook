@@ -229,15 +229,15 @@ app.post("/api/friends", async (req, res) => {
     { $pull: { friends: { user: userId._id } } },
     { new: true }
   ).exec();
-  let userFriends = user.friends.map(
+  let userFriends = user.friends.some(
     (userFriend) => userFriend.user.toString() === friendId._id.toString()
   );
-  let friendFriends = friend.friends.map(
+  let friendFriends = friend.friends.some(
     (friendFriend) => friendFriend.user.toString() === userId._id.toString()
   );
-  if (userFriends.length > 0 && friendFriends.length > 0) {
+  if (userFriends && friendFriends) {
     res.send({ status: 400 });
-  } else if (userFriends.length === 0 && friendFriends.length === 0) {
+  } else if (!userFriends && !friendFriends) {
     res.send({ status: 200 });
   } else {
     res.send({ status: 400 });
@@ -352,15 +352,15 @@ app.delete("/api/users/:user/followrequests/sended", async (req, res) => {
     { $pull: { "followRequests.received": userId._id } },
     { new: true }
   );
-  let requestSended = user.followRequests.sended.map(
+  let requestSended = user.followRequests.sended.some(
     (reqSended) => reqSended._id.toString() === friendId._id.toString()
   );
-  let requestReceived = friend.followRequests.received.map(
+  let requestReceived = friend.followRequests.received.some(
     (reqReceived) => reqReceived._id.toString() === userId._id.toString()
   );
-  if (requestSended.length > 0 && requestReceived.length > 0) {
+  if (requestSended && requestReceived) {
     res.send({ status: 400 });
-  } else if (requestSended.length === 0 && requestReceived.length === 0) {
+  } else if (!requestSended && !requestReceived) {
     res.send({ status: 200 });
   } else {
     res.send({ status: 400 });
@@ -393,21 +393,21 @@ app.post("/api/users/:user/followrequests/received", async (req, res) => {
     { $push: { friends: {user: userId._id} }, $pull: { "followRequests.sended": userId._id } },
     { new: true }
   );
-  let requestReceived = user.followRequests.received.map(
+  let requestReceived = user.followRequests.received.some(
     (reqReceived) => reqReceived._id.toString() === friendId._id.toString()
   );
-  let userFriends = user.friends.map(
+  let userFriends = user.friends.some(
     (f) => f.user.toString() === friendId._id.toString()
   );
-  let requestSended = friend.followRequests.sended.map(
+  let requestSended = friend.followRequests.sended.some(
     (reqSended) => reqSended._id.toString() === userId._id.toString()
   );
-  let friendFriends = friend.friends.map(
+  let friendFriends = friend.friends.some(
     (f) => f.user.toString() === userId._id.toString()
   );
-  if ((requestReceived.length > 0 && userFriends.length === 0) && (requestSended.length > 0 && friendFriends.length === 0)) {
+  if (requestReceived && !userFriends && requestSended && !friendFriends) {
     res.send({ status: 400 });
-  } else if ((requestReceived.length === 0 && userFriends.length > 0) && (requestSended.length === 0 && friendFriends.length > 0)) {
+  } else if (!requestReceived && userFriends && !requestSended && friendFriends) {
     res.send({ status: 200 });
   } else {
     res.send({ status: 400 });
@@ -428,15 +428,15 @@ app.delete("/api/users/:user/followrequests/received", async (req, res) => {
     { $pull: { "followRequests.sended": userId._id } },
     { new: true }
   );
-  let requestReceived = user.followRequests.received.map(
+  let requestReceived = user.followRequests.received.some(
     (reqReceived) => reqReceived._id.toString() === friendId._id.toString()
   );
-  let requestSended = friend.followRequests.sended.map(
+  let requestSended = friend.followRequests.sended.some(
     (reqSended) => reqSended._id.toString() === userId._id.toString()
   );
-  if (requestReceived.length > 0 && requestSended.length > 0) {
+  if (requestReceived && requestSended) {
     res.send({ status: 400 });
-  } else if (requestReceived.length === 0 && requestSended.length === 0) {
+  } else if (!requestReceived && !requestSended) {
     res.send({ status: 200 });
   } else {
     res.send({ status: 400 });
