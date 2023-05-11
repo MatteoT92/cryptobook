@@ -6,7 +6,7 @@ import UserCard from './UserCard';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-function UsersToFollow() {
+function UsersSigned() {
 
   const [show, setShow] = useState(false);
   const [users, setUsers] = useState([]);
@@ -81,4 +81,4 @@ function UsersToFollow() {
 
 }
 
-export default UsersToFollow;
+export default UsersSigned;

@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import UsersToFollow from "./UsersToFollow";
+import UsersSigned from "./UsersSigned";
 import FollowRequestsSended from "./FollowRequestsSended";
 import FollowRequestsReceived from "./FollowRequestsReceived";
 
@@ -25,7 +25,7 @@ function Users() {
                         align="end"
                         >
                             <NavDropdown.Item href="#">
-                                <UsersToFollow />
+                                <UsersSigned />
                             </NavDropdown.Item>
                             <NavDropdown.Item href="#">
                                 <FollowRequestsSended />
