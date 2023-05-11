@@ -204,6 +204,17 @@ app.get("/api/posts", async (req, res) => {
   res.send(posts);
 });
 
+app.get("/api/posts/:user", async (req, res) => {
+  let data = req.params;
+  let user = await User.findOne({ username: data.user }, { _id: 1 }).select("_id").exec();
+  let posts = await Post.find({}, { visibleTo: 0, _id: 0 })
+    .where("author").equals(user._id)
+    .populate("author", "username")
+    .select("author content date comments")
+    .exec();
+  res.send(posts);
+});
+
 app.get("/api/friends", (req, res) => {
   let data = req.query;
   let friends = User.find({ username: data.user }, { friends: 1, _id: 0 })

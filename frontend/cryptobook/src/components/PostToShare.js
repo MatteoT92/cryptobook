@@ -18,6 +18,8 @@ function PostToShare() {
     }, [post, key]);
 
     const handleClose = () => {
+        setPost("");
+        setKey("");
         setShow(false);
     }
     

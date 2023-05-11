@@ -6,7 +6,7 @@ import Post from './Post';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-function PostsToView() {
+function PostsPublished() {
 
     const [show, setShow] = useState(false);
     const [posts, setPosts] = useState([]);
@@ -14,7 +14,7 @@ function PostsToView() {
 
     useEffect(() => {
         const refresh = setInterval(() => {
-            postsToView();
+            postsPublished();
         }, 1000);
         return () => clearInterval(refresh);
       }, []);
@@ -39,8 +39,8 @@ function PostsToView() {
         setKey(e.target.value);
     }
 
-    const postsToView = (e) => {
-        fetch(`http://localhost:5000/api/posts?user=${sessionStorage.getItem("user")}`, {
+    const postsPublished = (e) => {
+        fetch(`http://localhost:5000/api/posts/${sessionStorage.getItem("user")}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -57,11 +57,11 @@ function PostsToView() {
         return (
             <div>
                 <Button variant="dark" onClick={handleShow}>
-                    <i className="bi bi-stickies-fill me-1"></i>Posts To View
+                    <i className="bi bi-stickies-fill me-1"></i>Posts Published
                 </Button>
                 <Modal show={show} onHide={handleClose} fullscreen={true}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Posts To View</Modal.Title>
+                        <Modal.Title>Posts Published</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="post-received">
                         <div className="d-flex">
@@ -77,15 +77,15 @@ function PostsToView() {
         return (
             <div>
                 <Button variant="dark" onClick={handleShow}>
-                    <i className="bi bi-stickies-fill me-1"></i>Posts To View
+                    <i className="bi bi-stickies-fill me-1"></i>Posts Published
                 </Button>
                 <Modal show={show} onHide={handleClose} fullscreen={true}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Posts To View</Modal.Title>
+                        <Modal.Title>Posts Published</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="d-flex align-items-center justify-content-center">
-                        <img className="img-fluid" src={process.env.PUBLIC_URL + "/no-posts.png"} alt="No posts shared with you yet" />
-                        <h2>I'm sorry... No posts shared with you yet</h2>
+                        <img className="img-fluid" src={process.env.PUBLIC_URL + "/no-posts.png"} alt="No posts published yet" />
+                        <h2>I'm sorry... No posts published yet</h2>
                     </Modal.Body>
                 </Modal>
             </div>
@@ -94,4 +94,4 @@ function PostsToView() {
 
 }
 
-export default PostsToView;
+export default PostsPublished;
