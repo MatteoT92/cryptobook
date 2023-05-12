@@ -13,7 +13,7 @@ function UsersSigned() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    if (search.length === 0) {
+    if (!search.length) {
         usersSigned();
     } else {
         filteredUsers();
@@ -61,8 +61,8 @@ function UsersSigned() {
             <Modal show={show} onHide={handleClose} fullscreen={true}>
                 <Modal.Header closeButton>
                     <Modal.Title>Users</Modal.Title>
-                    <div>
-                        <div className="d-flex mb-2" role="search">
+                    <div className="ms-2">
+                        <div className="d-flex" role="search">
                             <input className="form-control" type="search" id="search-users" placeholder="Search" value={search} onChange={handleSearch} />
                             <button className="btn btn-light" type="button" onClick={filteredUsers}>
                                 <i className="bi bi-search"></i>

@@ -15,11 +15,13 @@ function UserCard(props) {
         setUsername(props.username);
         photoProfile();
         checkOnUser();
-    }, [props.username]);
+    }, [props.username, photo]);
 
     useEffect(() => {
-        setPhoto(photo);
-    }, [photo]);
+        setUsername(username);
+        photoProfile();
+        checkOnUser();
+    }, [username, photo]);
 
     const photoProfile = () => {
         fetch(`http://localhost:5000/api/photo?username=${username}`, {
