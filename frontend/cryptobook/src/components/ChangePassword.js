@@ -9,8 +9,17 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 function ChangePassword(props) {
 
   const [show, setShow] = useState(false);
+  const [user, setUser] = useState(props.user);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+
+  useEffect(() => {
+    setUser(props.user);
+  }, [props.user]);
+
+  useEffect(() => {
+    setUser(user);
+  }, [user]);
 
   useEffect(() => {
     setOldPassword(oldPassword);
@@ -44,11 +53,12 @@ function ChangePassword(props) {
               'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-              username: sessionStorage.getItem('user'),
+              username: user,
               oldPassword: oldPassword,
               newPassword: newPassword
           })
-      }).then(res => res.json())
+      })
+      .then(res => res.json())
       .then(data => {
           setOldPassword("");
           setNewPassword("");
@@ -58,7 +68,8 @@ function ChangePassword(props) {
           } else {
               alert("Something went wrong");
           }
-      });
+      })
+      .catch(err => console.log(err));
   }
 
   const toggleVisibilityOldPassword = (e) => {

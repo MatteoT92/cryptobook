@@ -26,29 +26,23 @@ app.use(express.json());
 // API Routes
 app.post("/login", (req, res) => {
   let data = req.body;
-  let passwordEncrypted = User.find(
-    { username: data.username },
-    { password: 1, _id: 0 }
-  )
+  let passwordEncrypted = User.find({ username: data.username }, { password: 1, _id: 0 })
     .select("password")
     .exec();
   passwordEncrypted.then((result) => {
-    if (bcrypt.compareSync(data.password, result[0].password)) {
-      let user = User.find(
-        { username: data.username, password: result[0].password },
-        { username: 1, _id: 0 }
-      )
+    if (result.length === 1 && bcrypt.compareSync(data.password, result[0].password)) {
+      let user = User.find({ username: data.username, password: result[0].password }, { username: 1, _id: 0 })
         .select("username")
         .exec();
       user.then((result) => {
         if (result.length === 1) {
-          res.status(200).send(result[0]);
+          res.send(result[0]);
         } else {
-          res.status(400).send({ message: "Invalid username or password" });
+          res.send({ message: "Invalid username or password" });
         }
       });
     } else {
-      res.status(400).send({ status: 400 });
+      res.send({ message: "Invalid username or password" });
     }
   });
 });
@@ -336,7 +330,7 @@ app.post("/api/settings/photo", (req, res) => {
   });
 });
 
-app.post("/api/settings/unsubscribe", (req, res) => {
+app.delete("/api/settings/unsubscribe", (req, res) => {
   let data = req.body;
   let user = User.findOneAndDelete({ username: data.username });
   user.then((result) => {

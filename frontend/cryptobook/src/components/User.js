@@ -10,14 +10,12 @@ function User(props) {
     useEffect(() => {
         setName(props.name);
         photoProfile();
-    }, [props.name, name]);
+    }, [props.name, photo]);
 
-    /*useEffect(() => {
-        const refresh = setInterval(() => {
-            photoProfile();
-        }, 1000);
-        return () => clearInterval(refresh);
-      }, []);*/
+    useEffect(() => {
+        setName(name);
+        photoProfile();
+      }, [name, photo]);
 
     const photoProfile = () => {
         if (name) {

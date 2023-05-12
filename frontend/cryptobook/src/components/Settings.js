@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -10,7 +10,17 @@ import Unsubscribe from "./Unsubscribe";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-function Settings() {
+function Settings(props) {
+
+    const [user, setUser] = useState(props.user);
+
+    useEffect(() => {
+        setUser(props.user);
+    }, [props.user]);
+
+    useEffect(() => {
+        setUser(user);
+    }, [user]);
 
     return (
         <Navbar variant="dark" bg="dark" expand="lg">
@@ -25,13 +35,13 @@ function Settings() {
                         align="end"
                         >
                             <NavDropdown.Item href="#">
-                                <ChangePassword />
+                                <ChangePassword user={user} />
                             </NavDropdown.Item>
                             <NavDropdown.Item href="#">
-                                <ChangePhoto />
+                                <ChangePhoto user={user} />
                             </NavDropdown.Item>
                             <NavDropdown.Item href="#">
-                                <Unsubscribe />
+                                <Unsubscribe user={user} />
                             </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>

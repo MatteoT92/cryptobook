@@ -13,6 +13,10 @@ function Navbar(props) {
         setUser(props.user);
     }, [props.user]);
 
+    useEffect(() => {
+       setUser(user); 
+    }, [user]);
+
     return (
         <nav className="navbar bg-dark">
             <div className="container-fluid">

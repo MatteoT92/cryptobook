@@ -32,8 +32,12 @@ function Log(props) {
       })
       .then(res => res.json())
       .then(data => {
-        setUser(data.username);
-        sessionStorage.setItem("user", data.username);
+        if (data.username) {
+          setUser(data.username);
+          sessionStorage.setItem("user", data.username);
+        } else {
+          alert(data.message);
+        }
       })
       .catch(err => console.log(err));
     }
@@ -72,7 +76,7 @@ function Log(props) {
             <User name={username} />
             <Posts />
             <Users />
-            <Settings />
+            <Settings user={user} />
             <button className="btn" onClick={logout}>
               <i className="bi bi-x-circle-fill h1 logout"></i>
             </button>

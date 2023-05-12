@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
@@ -8,6 +8,15 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 function Unsubscribe(props) {
 
   const [show, setShow] = useState(false);
+  const [user, setUser] = useState(props.user);
+
+  useEffect(() => {
+      setUser(props.user);
+  }, [props.user]);
+
+  useEffect(() => {
+    setUser(user);
+  }, [user]);
 
   const handleClose = () => {
     setShow(false);
@@ -20,14 +29,15 @@ function Unsubscribe(props) {
   const handleSubmit = (e) => {
       e.preventDefault();
       fetch('http://localhost:5000/api/settings/unsubscribe', {
-          method: 'POST',
+          method: 'DELETE',
           headers: {
               'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-              username: sessionStorage.getItem('user')
+              username: user
           })
-      }).then(res => res.json())
+      })
+      .then(res => res.json())
       .then(data => {
           if (data.status === 200) {
             handleClose();
@@ -35,7 +45,8 @@ function Unsubscribe(props) {
           } else {
             alert("Something went wrong");
           }
-      });
+      })
+      .catch(err => console.log(err));
   }
 
   return (
@@ -48,7 +59,7 @@ function Unsubscribe(props) {
                     <Modal.Title>Unsubscribe</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4>Are you sure you want to unsubscribe?</h4>
+                    <h4>{user} are you sure you want to unsubscribe?</h4>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>

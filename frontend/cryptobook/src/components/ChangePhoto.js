@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -10,7 +10,20 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 function ChangePhoto(props) {
 
   const [show, setShow] = useState(false);
+  const [user, setUser] = useState(props.user);
   const [photo, setPhoto] = useState(null);
+
+  useEffect(() => {
+    setUser(props.user);
+  }, [props.user]);
+
+  useEffect(() => {
+    setUser(user);
+  }, [user]);
+
+  useEffect(() => {
+    setPhoto(photo);
+  }, [photo]);
 
   const handleClose = () => {
     setShow(false);
