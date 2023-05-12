@@ -59,7 +59,7 @@ function Unsubscribe(props) {
                     <Modal.Title>Unsubscribe</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4>{user} are you sure you want to unsubscribe?</h4>
+                    <h4>{user}, are you sure you want to unsubscribe?</h4>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>

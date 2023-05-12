@@ -17,6 +17,13 @@ function User(props) {
         photoProfile();
       }, [name, photo]);
 
+    useEffect(() => {
+        const refresh = setInterval(() => {
+            photoProfile();
+        }, 1000);
+        return () => clearInterval(refresh);
+    }, [photo]);
+
     const photoProfile = () => {
         if (name) {
             fetch(`http://localhost:5000/api/photo?username=${name}`, {

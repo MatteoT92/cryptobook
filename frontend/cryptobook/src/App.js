@@ -16,6 +16,10 @@ function App() {
       return () => clearInterval(refresh);
     }, []);
 
+    useEffect(() => {
+      setUser(user);
+    }, [user]);
+
     return (
       <div>
         <Navbar user={user} />

@@ -50,7 +50,7 @@ function ChangePhoto(props) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          username: sessionStorage.getItem('user'),
+          username: user,
           photo: base64Image
         })
       })
