@@ -10,13 +10,15 @@ function UsersSigned() {
 
   const [show, setShow] = useState(false);
   const [users, setUsers] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
-    const refresh = setInterval(() => {
+    if (search.length === 0) {
         usersSigned();
-    }, 1000);
-    return () => clearInterval(refresh);
-  }, []);
+    } else {
+        filteredUsers();
+    }
+  }, [search, users]);
 
   const handleClose = () => {
     setShow(false);
@@ -26,18 +28,28 @@ function UsersSigned() {
     setShow(true);
   }
 
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  }
+
   const usersSigned = () => {
       fetch("http://localhost:5000/api/users", {
           method: "GET",
           headers: {
               "Content-Type": "application/json"
           }
-      }).then(res => res.json())
+      })
+      .then(res => res.json())
       .then(data => {
           let usersFiltered = data.filter(user => user.username !== sessionStorage.getItem("user"));
           setUsers(usersFiltered);
       })
       .catch(err => console.log(err));
+  }
+
+  const filteredUsers = (e) => {
+    let searchedUsers = users.filter(user => user.username.toLowerCase().includes(search.toLowerCase()));
+    setUsers(searchedUsers);
   }
 
   if (users.length > 0) {
@@ -49,6 +61,14 @@ function UsersSigned() {
             <Modal show={show} onHide={handleClose} fullscreen={true}>
                 <Modal.Header closeButton>
                     <Modal.Title>Users</Modal.Title>
+                    <div>
+                        <div className="d-flex mb-2" role="search">
+                            <input className="form-control" type="search" id="search-users" placeholder="Search" value={search} onChange={handleSearch} />
+                            <button className="btn btn-light" type="button" onClick={filteredUsers}>
+                                <i className="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </Modal.Header>
                 <Modal.Body className="d-flex">
                     {users.map((user, i) => (
