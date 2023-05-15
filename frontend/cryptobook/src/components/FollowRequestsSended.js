@@ -10,13 +10,15 @@ function FollowRequestsSended() {
 
   const [show, setShow] = useState(false);
   const [users, setUsers] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
-    const refresh = setInterval(() => {
+    if (!search.length) {
         followRequestSended();
-    }, 1000);
-    return () => clearInterval(refresh);
-  }, []);
+    } else {
+        filteredUsers();
+    }
+  }, [search, users]);
 
   const handleClose = () => {
     setShow(false);
@@ -24,6 +26,10 @@ function FollowRequestsSended() {
 
   const handleShow = () => {
     setShow(true);
+  }
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
   }
 
   const followRequestSended = () => {
@@ -40,6 +46,11 @@ function FollowRequestsSended() {
       .catch(err => console.log(err));
   }
 
+  const filteredUsers = (e) => {
+    let searchedUsers = users.filter(user => user.username.toLowerCase().includes(search.toLowerCase()));
+    setUsers(searchedUsers);
+  }
+
   if (users.length > 0) {
     return (
         <div>
@@ -49,6 +60,14 @@ function FollowRequestsSended() {
             <Modal show={show} onHide={handleClose} fullscreen={true}>
                 <Modal.Header closeButton>
                     <Modal.Title>Follow Requests Sended</Modal.Title>
+                    <div className="ms-2">
+                        <div className="d-flex" role="search">
+                            <input className="form-control" type="search" id="search-req-sended" placeholder="Search" value={search} onChange={handleSearch} />
+                            <button className="btn btn-light" type="button" onClick={filteredUsers}>
+                                <i className="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </Modal.Header>
                 <Modal.Body className="d-flex">
                     {users.map((user, i) => (
