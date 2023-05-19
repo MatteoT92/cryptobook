@@ -42,6 +42,7 @@ function Unsubscribe(props) {
           if (data.status === 200) {
             handleClose();
             sessionStorage.clear();
+            window.location.href = '/';
           } else {
             alert("Something went wrong");
           }
