@@ -112,7 +112,7 @@ function Sign() {
                         <button type="submit" className="btn btn-primary">Sign me!</button>
                     </div>
                     <div className="row text-center mt-2">
-                        <p className="h4 text-white">
+                        <p className="btn btn-dark mb-0">
                             You are already signed? <strong><u>Then log in!</u><i className="bi bi-arrow-up-right"></i></strong>
                         </p>
                     </div>
