@@ -68,7 +68,7 @@ function Sign() {
 
     const toggleVisibility = (e) => {
         let password = document.getElementById("pwd");
-        let iconVisibility = document.getElementsByClassName("bi bi-eye");
+        let iconVisibility = document.getElementById("eye-pwd");
         if (password.type === "password") {
             password.type = "text";
             iconVisibility.className = "bi bi-eye-slash";
@@ -104,15 +104,17 @@ function Sign() {
                         <div className="d-flex">
                             <input type="password" className="form-control" id="pwd" placeholder="Password" value={password} onChange={handlePassword} />
                             <button className="btn btn-light" type="button" onClick={toggleVisibility}>
-                                <i className="bi bi-eye"></i>
+                                <i className="bi bi-eye" id="eye-pwd"></i>
                             </button>
                         </div>
                     </div>
                     <div className="col text-center mt-2">
                         <button type="submit" className="btn btn-primary">Sign me!</button>
                     </div>
-                    <div className="row text-center">
-                        <p>You are already signed? <strong><u>Then log in!</u></strong></p>
+                    <div className="row text-center mt-2">
+                        <p className="h4 text-white">
+                            You are already signed? <strong><u>Then log in!</u><i className="bi bi-arrow-up-right"></i></strong>
+                        </p>
                     </div>
                 </form>
             </div>

@@ -64,7 +64,7 @@ function Log(props) {
 
     const toggleVisibility = (e) => {
       let password = document.getElementById("password");
-      let iconVisibility = document.getElementsByClassName("bi bi-eye");
+      let iconVisibility = document.getElementById("eye-password");
       if (password.type === "password") {
           password.type = "text";
           iconVisibility.className = "bi bi-eye-slash";
@@ -95,7 +95,7 @@ function Log(props) {
             <input type="text" className="form-control me-2" id="username" placeholder="Username" value={username} onChange={handleChangeInputUsername} />
             <input type="password" className="form-control me-2" id="password" placeholder="Password" value={password} onChange={handleChangeInputPassword} />
             <button className="btn btn-dark ms-1" type="button" onClick={toggleVisibility}>
-              <i className="bi bi-eye"></i>
+              <i className="bi bi-eye" id="eye-password"></i>
             </button>
             <button className="btn" type="submit">
               <i className="bi bi-box-arrow-in-right h1 login"></i>

@@ -40,7 +40,8 @@ function Comment(props) {
                 message: message,
                 key: key
             })
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .then(data => {
             document.getElementById(`ciphered-comment${idxMsg}`).innerHTML = data.message;
             setKey("");
@@ -50,7 +51,7 @@ function Comment(props) {
 
     function toggleVisibility(idxMsg) {
         let key = document.getElementById(`fkey-comment${idxMsg}`);
-        let iconVisibility = document.getElementsByClassName("bi bi-eye");
+        let iconVisibility = document.getElementById(`eye-fkey-comment${idxMsg}`);
         if (key.type === "password") {
             key.type = "text";
             iconVisibility.className = "bi bi-eye-slash";
@@ -87,7 +88,7 @@ function Comment(props) {
                 <div className="col d-flex m-1">
                     <input className="form-control mb-1" type="password" id={`fkey-comment${idxComment}`} placeholder="Secret Key" value={key} onChange={handleKey} />
                     <button className="btn btn-dark ms-1 mb-1" type="button" onClick={() => toggleVisibility(idxComment)}>
-                        <i className="bi bi-eye"></i>
+                        <i className="bi bi-eye" id={`eye-fkey-comment${idxComment}`}></i>
                     </button>
                     <button className="btn btn-warning ms-1 mb-1" type="button" onClick={() => decryptMessage(idxComment)}>
                         <i className="bi bi-unlock"></i>

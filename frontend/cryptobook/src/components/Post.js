@@ -59,7 +59,8 @@ function Post(props) {
                 message: message,
                 key: key
             })
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .then(data => {
             document.getElementById(`ciphered-post${idxMsg}`).innerHTML = data.message;
             setKey("");
@@ -69,7 +70,7 @@ function Post(props) {
 
     function toggleVisibility(idxMsg) {
         let key = document.getElementById(`fkey-post${idxMsg}`);
-        let iconVisibility = document.getElementsByClassName("bi bi-eye");
+        let iconVisibility = document.getElementById(`eye-fkey-post${idxMsg}`);
         if (key.type === "password") {
             key.type = "text";
             iconVisibility.className = "bi bi-eye-slash";
@@ -92,7 +93,7 @@ function Post(props) {
                 <div className="col d-flex m-1">
                     <input className="form-control mb-1" type="password" id={`fkey-post${idxPost}`} placeholder="Secret Key" value={key} onChange={handleKey} />
                     <button className="btn btn-dark ms-1 mb-1" type="button" onClick={() => toggleVisibility(idxPost)}>
-                        <i className="bi bi-eye"></i>
+                        <i className="bi bi-eye" id={`eye-fkey-post${idxPost}`}></i>
                     </button>
                     <button className="btn btn-warning ms-1 mb-1" type="button" onClick={() => decryptMessage(idxPost)}>
                         <i className="bi bi-unlock"></i>

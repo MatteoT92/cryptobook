@@ -90,7 +90,7 @@ function CommentToShare(props) {
 
     const toggleVisibility = (e) => {
         let key = document.getElementById("key-comment");
-        let iconVisibility = document.getElementsByClassName("bi bi-eye");
+        let iconVisibility = document.getElementById("eye-key-comment");
         if (key.type === "password") {
             key.type = "text";
             iconVisibility.className = "bi bi-eye-slash";
@@ -117,7 +117,7 @@ function CommentToShare(props) {
                         <Form.Group controlId="key-comment" className="d-flex align-items-center mt-1">
                             <Form.Control type="password" placeholder="Secret Key" value={key} onChange={handleKey} />
                             <Button variant="dark" className="ms-1" onClick={toggleVisibility}>
-                                <i className="bi bi-eye"></i>
+                                <i className="bi bi-eye" id="eye-key-comment"></i>
                             </Button>
                             <Button variant="warning" className="ms-1" onClick={encryptMessage}>
                                 <i className="bi bi-lock"></i>

@@ -121,7 +121,7 @@ function Chat() {
 
     const toggleVisibility = (e) => {
         let key = document.getElementById("key");
-        let iconVisibility = document.getElementsByClassName("bi bi-eye");
+        let iconVisibility = document.getElementById("eye-key");
         if (key.type === "password") {
             key.type = "text";
             iconVisibility.className = "bi bi-eye-slash";
@@ -146,7 +146,7 @@ function Chat() {
                         <div className="col text-end d-flex mt-1 mb-1">
                             <input className="form-control" type="password" id="key" placeholder="Secret Key" value={key} onChange={handleKey} />
                             <button className="btn btn-dark ms-1" type="button" onClick={toggleVisibility}>
-                                <i className="bi bi-eye"></i>
+                                <i className="bi bi-eye" id="eye-key"></i>
                             </button>
                             <button className="btn btn-warning ms-1" type="button" onClick={encryptMessage}>
                                 <i className="bi bi-lock"></i>

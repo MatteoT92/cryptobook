@@ -74,7 +74,7 @@ function ChangePassword(props) {
 
   const toggleVisibilityOldPassword = (e) => {
     let password = document.getElementById("old-password");
-    let iconVisibility = document.getElementsByClassName("bi bi-eye");
+    let iconVisibility = document.getElementById("eye-old-pwd");
     if (password.type === "password") {
         password.type = "text";
         iconVisibility.className = "bi bi-eye-slash";
@@ -86,7 +86,7 @@ function ChangePassword(props) {
 
   const toggleVisibilityNewPassword = (e) => {
     let password = document.getElementById("new-password");
-    let iconVisibility = document.getElementsByClassName("bi bi-eye");
+    let iconVisibility = document.getElementById("eye-new-pwd");
     if (password.type === "password") {
         password.type = "text";
         iconVisibility.className = "bi bi-eye-slash";
@@ -112,7 +112,7 @@ function ChangePassword(props) {
                             <div className="d-flex">
                                 <Form.Control type="password" placeholder="Previous Password" value={oldPassword} onChange={handleOldPassword} />
                                 <Button variant="light" onClick={toggleVisibilityOldPassword}>
-                                    <i className="bi bi-eye"></i>
+                                    <i className="bi bi-eye" id="eye-old-pwd"></i>
                                 </Button>
                             </div>
                         </Form.Group>
@@ -121,7 +121,7 @@ function ChangePassword(props) {
                             <div className="d-flex">
                                 <Form.Control type="password" placeholder="New Password" value={newPassword} onChange={handleNewPassword}/>
                                 <Button variant="light" onClick={toggleVisibilityNewPassword}>
-                                    <i className="bi bi-eye"></i>
+                                    <i className="bi bi-eye" id="eye-new-pwd"></i>
                                 </Button>
                             </div>
                         </Form.Group>

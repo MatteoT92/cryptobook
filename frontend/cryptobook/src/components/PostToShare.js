@@ -83,7 +83,7 @@ function PostToShare() {
 
     const toggleVisibility = (e) => {
         let key = document.getElementById("key-post");
-        let iconVisibility = document.getElementsByClassName("bi bi-eye");
+        let iconVisibility = document.getElementById("eye-key-post");
         if (key.type === "password") {
             key.type = "text";
             iconVisibility.className = "bi bi-eye-slash";
@@ -110,7 +110,7 @@ function PostToShare() {
                         <Form.Group controlId="key-post" className="d-flex align-items-center mt-1">
                             <Form.Control type="password" placeholder="Secret Key" value={key} onChange={handleKey} />
                             <Button variant="dark" className="ms-1" onClick={toggleVisibility}>
-                                <i className="bi bi-eye"></i>
+                                <i className="bi bi-eye" id="eye-key-post"></i>
                             </Button>
                             <Button variant="warning" className="ms-1" onClick={encryptMessage}>
                                 <i className="bi bi-lock"></i>
