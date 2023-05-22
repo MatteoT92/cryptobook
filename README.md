@@ -1,4 +1,3 @@
-
 # CryptoBook
 
 CryptoBook è un social network che permette di scambiare e crittografare i messaggi/posts.
@@ -67,5 +66,7 @@ Per testare la web-app occorre andare sul browser e digitare il seguente URL
 
 ## Autore:
 Matteo Tartaglione
-- [GitHub](https://www.github.com/MatteoT92)
-- [LinkedIn](https://www.linkedin.com/in/matteotartaglione)
+## 🔗 Links
+[![github](https://img.shields.io/github/followers/MatteoT92?style=for-the-badge&logo=github&logoColor=white)](https://github.com/MatteoT92)
+
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/matteotartaglione/)

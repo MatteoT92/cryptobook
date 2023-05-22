@@ -59,9 +59,11 @@ function Sign() {
                 setUsername("");
                 setEmail("");
                 setPassword("");
-              });
+              })
+              .catch(err => console.log(err));
             };
-        });
+        })
+        .catch(err => console.log(err));
     };
 
     const toggleVisibility = (e) => {

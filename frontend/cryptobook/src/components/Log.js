@@ -14,6 +14,11 @@ function Log(props) {
     const [user, setUser] = useState(props.user);
 
     useEffect(() => {
+      setUser(props.user);
+      setUsername(props.user);
+    }, [props.user]);
+
+    useEffect(() => {
       setUser(user);
       setUsername(user);
     }, [user]);
