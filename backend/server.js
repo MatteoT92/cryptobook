@@ -339,7 +339,39 @@ app.delete("/api/settings/unsubscribe", (req, res) => {
 });
 
 app.get("/api/users", async (req, res) => {
-  let users = await User.find({}, { username: 1, _id: 0 }).select("username").exec();
+  let user = await User.findOne({username: req.query.exclude}, { username: 1, friends: 1, followRequests: 1, _id: 0 })
+    .populate("friends.user", "username")
+    .populate("followRequests.sended", "username")
+    .populate("followRequests.received", "username")
+    .select("username friends followRequests")
+    .exec();
+  let users = await User.find({}, { username: 1, _id: 0 })
+    .select("username")
+    .exec();
+  const excludedUser = [user].map(
+    (user) => user.username
+  );
+  const excludedFriends = user.friends.map(
+    (friend) => friend.user.username
+  );
+  const excludedRequestsSended = user.followRequests.sended.map(
+    (request) => request.username
+  );
+  const excludedRequestsReceived = user.followRequests.received.map(
+    (request) => request.username
+  );
+  users = users.filter((userItem) => {
+    return !excludedUser.includes(userItem.username);
+  });
+  users = users.filter((userItem) => {
+    return !excludedFriends.includes(userItem.username);
+  });
+  users = users.filter((userItem) => {
+    return !excludedRequestsSended.includes(userItem.username);
+  });
+  users = users.filter((userItem) => {
+    return !excludedRequestsReceived.includes(userItem.username);
+  });
   res.send(users);
 });
 

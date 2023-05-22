@@ -33,7 +33,7 @@ function UsersSigned() {
   }
 
   const usersSigned = () => {
-      fetch("http://localhost:5000/api/users", {
+  fetch(`http://localhost:5000/api/users?exclude=${sessionStorage.getItem("user")}`, {
           method: "GET",
           headers: {
               "Content-Type": "application/json"
@@ -41,8 +41,7 @@ function UsersSigned() {
       })
       .then(res => res.json())
       .then(data => {
-          let usersFiltered = data.filter(user => user.username !== sessionStorage.getItem("user"));
-          setUsers(usersFiltered);
+        setUsers(data);
       })
       .catch(err => console.log(err));
   }
