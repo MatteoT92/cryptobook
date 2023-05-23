@@ -9,18 +9,18 @@ function UserCard(props) {
 
     const [username, setUsername] = useState(props.username);
     const [photo, setPhoto] = useState("");
-    const [check, setCheck] = useState({});
+    const [checks, setChecks] = useState({});
 
     useEffect(() => {
         setUsername(props.username);
         photoProfile();
-        checkOnUser();
+        checksOnUser();
     }, [props.username, photo]);
 
     useEffect(() => {
         setUsername(username);
         photoProfile();
-        checkOnUser();
+        checksOnUser();
     }, [username, photo]);
 
     const photoProfile = () => {
@@ -37,7 +37,7 @@ function UserCard(props) {
         .catch(err => console.log(err));
     }
 
-    const checkOnUser = () => {
+    const checksOnUser = () => {
         fetch(`http://localhost:5000/api/users/${sessionStorage.getItem("user")}/${username}`, {
             method: 'GET',
             headers: {
@@ -46,7 +46,7 @@ function UserCard(props) {
         })
         .then(res => res.json())
         .then(data => {
-            setCheck(data);
+            setChecks(data);
         })
         .catch(err => console.log(err));
     }
@@ -158,7 +158,7 @@ function UserCard(props) {
         .catch(err => console.log(err));
     }
 
-    if (!check.isFriend && !check.isFollowRequestSended && !check.isFollowRequestReceived) {
+    if (!checks.isFriend && !checks.isFollowRequestSended && !checks.isFollowRequestReceived) {
         return (
             <Card bg="dark" className="text-center">
                 <Card.Img variant="top" className="profile-card-img" src={photo} />
@@ -172,7 +172,7 @@ function UserCard(props) {
                 </Card.Body>
             </Card>
         )
-    } else if (!check.isFriend && check.isFollowRequestSended && !check.isFollowRequestReceived) {
+    } else if (!checks.isFriend && checks.isFollowRequestSended && !checks.isFollowRequestReceived) {
         return (
             <Card bg="dark" className="text-center">
                 <Card.Img variant="top" className="profile-card-img" src={photo} />
@@ -186,7 +186,7 @@ function UserCard(props) {
                 </Card.Body>
             </Card>
         )
-    } else if (!check.isFriend && !check.isFollowRequestSended && check.isFollowRequestReceived) {
+    } else if (!checks.isFriend && !checks.isFollowRequestSended && checks.isFollowRequestReceived) {
         return (
             <Card bg="dark" className="text-center">
                 <Card.Img variant="top" className="profile-card-img" src={photo} />
