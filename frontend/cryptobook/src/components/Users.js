@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import UsersToFollow from "./UsersToFollow";
+import UsersFollowed from "./UsersFollowed";
 import FollowRequestsSended from "./FollowRequestsSended";
 import FollowRequestsReceived from "./FollowRequestsReceived";
 
@@ -26,6 +27,9 @@ function Users() {
                         >
                             <NavDropdown.Item href="#">
                                 <UsersToFollow />
+                            </NavDropdown.Item>
+                            <NavDropdown.Item href="#">
+                                <UsersFollowed />
                             </NavDropdown.Item>
                             <NavDropdown.Item href="#">
                                 <FollowRequestsSended />
