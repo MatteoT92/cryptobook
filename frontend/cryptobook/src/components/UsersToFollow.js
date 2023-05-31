@@ -6,7 +6,7 @@ import UserCard from './UserCard';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-function UsersSigned() {
+function UsersToFollow() {
 
   const [show, setShow] = useState(false);
   const [users, setUsers] = useState([]);
@@ -14,7 +14,7 @@ function UsersSigned() {
 
   useEffect(() => {
     if (!search.length) {
-        usersSigned();
+        usersToFollow();
     } else {
         filteredUsers();
     }
@@ -32,7 +32,7 @@ function UsersSigned() {
     setSearch(e.target.value);
   }
 
-  const usersSigned = () => {
+  const usersToFollow = () => {
   fetch(`http://localhost:5000/api/users?exclude=${sessionStorage.getItem("user")}`, {
           method: "GET",
           headers: {
@@ -55,11 +55,11 @@ function UsersSigned() {
     return (
         <div>
             <Button variant="dark" onClick={handleShow}>
-                <i className="bi bi-people-fill me-1"></i>Users
+                <i className="bi bi-people-fill me-1"></i>Users To Follow
             </Button>
             <Modal show={show} onHide={handleClose} fullscreen={true}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Users</Modal.Title>
+                    <Modal.Title>Users To Follow</Modal.Title>
                     <div className="ms-2">
                         <div className="d-flex" role="search">
                             <input className="form-control" type="search" id="search-users" placeholder="Search" value={search} onChange={handleSearch} />
@@ -83,7 +83,7 @@ function UsersSigned() {
     return (
         <div>
             <Button variant="dark" onClick={handleShow}>
-                <i className="bi bi-people-fill me-1"></i>Users
+                <i className="bi bi-people-fill me-1"></i>Users To Follow
             </Button>
             <Modal show={show} onHide={handleClose} fullscreen={true}>
                 <Modal.Header closeButton>
@@ -100,4 +100,4 @@ function UsersSigned() {
 
 }
 
-export default UsersSigned;
+export default UsersToFollow;
